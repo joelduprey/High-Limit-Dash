@@ -1,161 +1,361 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
+    <link rel="manifest" href="manifest.json">
+    <link rel="apple-touch-icon" href="icon.png">
+    <meta name="theme-color" content="#ff6600">
+    <link rel="icon" href="favicon.ico" type="image/x-icon">
     <meta charset="UTF-8">
-    <title>Outlaw Kart Qualifying Grid</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>High Limit Dash Starting Order</title>
     <style>
+        @import url('https://fonts.googleapis.com/css2?family=Oswald:wght@600&display=swap');
+
         body {
-            font-family: Arial, sans-serif;
-            padding: 20px;
+            font-family: 'Oswald', sans-serif;
+            text-align: center;
+            margin: 10px;
+            background-color: #1a1a1a;
+            color: white;
+            font-size: 16px;
         }
-        table, th, td {
-            border: 1px solid #000;
+        table {
+            width: 100%;
+            margin: 5px auto;
             border-collapse: collapse;
+            background-color: #000;
+            color: white;
+            border: 2px solid #FFC107;
+            font-size: 3.5vw;
         }
         th, td {
-            padding: 8px 12px;
+            border: 2px solid #FFC107;
+            padding: 8px;
+            text-align: center;
+            background-color: #000;
+            color: white;
+        }
+        th:nth-child(1), td:nth-child(1) {
+            width: 50%;
+            max-height: 7vw;
+            overflow: hidden;
+            word-wrap: break-word;
+            white-space: pre-wrap;
+            overflow-wrap: break-word;
+        }
+        th:nth-child(2), td:nth-child(2) { width: 25%; }
+        th:nth-child(3), td:nth-child(3) { width: 25%; }
+        th:nth-child(1), td:nth-child(1) input {
+            width: 100%;
+            box-sizing: border-box;
+            margin: 0 auto;
+            display: block;
+            word-wrap: break-word;
+            white-space: pre-wrap;
+            overflow-wrap: break-word;
+            max-height: 7vw;
+            overflow: hidden;
+        }
+        input, textarea {
+            width: 90%;
+            padding: 8px;
+            font-size: 3.5vw;
+            text-align: center;
+            background-color: #000;
+            color: white;
+            border: 1px solid #FFC107;
+            box-sizing: border-box;
+            margin: 0 auto;
+            display: block;
+        }
+        .highlight {
+            background-color: #FFC107;
+            color: black;
+            font-weight: bold;
+        }
+        .header-container {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-bottom: 10px;
+        }
+        .header {
+            font-size: 6vw;
+            font-weight: bold;
+            color: #FFC107;
+            text-transform: uppercase;
+            margin: 5px 10px;
+            letter-spacing: 1px;
+            flex-grow: 1;
             text-align: center;
         }
-        input {
-            width: 80px;
+        .logo {
+            width: 40px;
+            height: 40px;
+            margin-left: 10px;
         }
-        .button {
+        #startingOrder th, #startingOrder td {
+            border: 1px solid black;
+        }
+        #startingOrder th:nth-child(1), #startingOrder td:nth-child(1) { max-width: 200px; } /* Constrain Row column width */
+        #startingOrder th:nth-child(2), #startingOrder td:nth-child(2) { width: 100%; }
+        #startingOrder th:nth-child(3), #startingOrder td:nth-child(3) { width: 100%; }
+        #startingOrder tr td {
+            background-color: #1E88E5;
+            color: white;
+            font-size: 3.5vw;
+        }
+        #startingOrder tr td:first-child {
+            background-color: #FFC107;
+            color: black;
+            font-weight: bold;
+        }
+        #startingOrder th {
+            background-color: #1E88E5;
+            color: #FFC107;
+        }
+        .table-container {
+            position: relative;
+            padding: 2px;
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+            justify-content: center;
+            align-items: center;
+        }
+        .fan-question {
+            margin: 20px auto;
+            padding: 10px;
+            border: 2px solid #FFC107;
+            background-color: #000;
+            width: 90%;
+            display: block;
+            text-align: center;
+        }
+        .fan-question textarea {
+            height: 10vw;
+            margin: 10px auto;
+            display: block;
+            word-wrap: break-word;
+            white-space: pre-wrap;
+            overflow-wrap: break-word;
+        }
+        .fan-info {
+            display: flex;
+            flex-direction: row;
+            gap: 10px;
             margin-top: 10px;
+            align-items: center;
+            justify-content: center;
+            flex-wrap: wrap;
+        }
+        .fan-label {
+            font-size: 3.5vw;
+            color: #FFC107;
+            text-transform: uppercase;
+            margin-bottom: 0;
+            min-width: 100px;
+            text-align: right;
+            padding-right: 5px;
+        }
+        .fan-input-wrapper {
+            flex: 1;
+            min-width: 200px;
+        }
+        .fan-input-wrapper input {
+            height: 7vw; /* Force height to match 2 lines */
+            max-height: 7vw;
+            overflow: hidden;
+            word-wrap: break-word;
+            white-space: pre-wrap;
+            overflow-wrap: break-word;
+            text-align: left; /* Override center alignment for wrapping */
+        }
+        button {
+            padding: 10px 20px;
+            font-size: 3.5vw;
+            font-family: 'Oswald', sans-serif;
+            background-color: #FFC107;
+            color: black;
+            border: none;
+            cursor: pointer;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            margin: 20px auto;
+            display: block;
+        }
+        button:hover {
+            background-color: #ffdb58;
+        }
+        @media (max-width: 480px) {
+            table { font-size: 4vw; }
+            input, textarea { font-size: 4vw; padding: 6px; }
+            .header { font-size: 7vw; }
+            button { font-size: 4vw; padding: 8px 16px; }
+            .logo { width: 30px; height: 30px; }
+            .fan-question textarea { height: 12vw; }
+            th:nth-child(1), td:nth-child(1) { max-height: 8vw; }
+            th:nth-child(1), td:nth-child(1) input { max-height: 8vw; }
+            .fan-label { font-size: 4vw; min-width: 80px; }
+            .fan-input-wrapper { min-width: 150px; }
+            .fan-info { flex-direction: column; align-items: stretch; }
+            .fan-input-wrapper input { height: 8vw; max-height: 8vw; }
         }
     </style>
 </head>
-<body>
-    <h2>Outlaw Kart Qualifying</h2>
-    <table>
-        <thead>
-            <tr>
-                <th>Driver</th>
-                <th>Spin #</th>
-                <th>Qual Time</th>
-            </tr>
-        </thead>
-        <tbody>
-            <!-- Driver rows -->
-            <script>
-                for (let i = 1; i <= 8; i++) {
-                    document.write(`
-                        <tr>
-                            <td><input type="text" id="driver${i}" oninput="saveFormData(); updateGrid()"></td>
-                            <td><input type="text" id="spin${i}" oninput="restrictSpin(this); saveFormData(); updateGrid()"></td>
-                            <td><input type="text" id="qual${i}" oninput="formatTime(this); saveFormData()"></td>
-                        </tr>
-                    `);
-                }
-            </script>
-        </tbody>
-    </table>
+<body onload="populateDriverTable(); loadFormData()">
+    <div class="header-container">
+        <img src="logo.png" alt="Logo" class="logo">
+        <div class="header">REDRAW WHEEL ORDER</div>
+    </div>
 
-    <button class="button" onclick="clearForm()">Clear</button>
+    <div class="fan-question">
+        <div class="header">Fan Question of the Night</div>
+        <textarea id="fanQuestion" placeholder="Enter the fan's question here..." oninput="saveFormData()"></textarea>
+        <div class="fan-info">
+            <div class="fan-label">Fan Name</div>
+            <div class="fan-input-wrapper"><input type="text" id="fanName" placeholder="Fan's Name" oninput="saveFormData()"></div>
+            <div class="fan-label">Fan Hometown</div>
+            <div class="fan-input-wrapper"><input type="text" id="fanHometown" placeholder="Fan's Hometown" oninput="saveFormData()"></div>
+        </div>
+    </div>
 
-    <h3>Starting Order</h3>
-    <table>
-        <thead>
-            <tr>
-                <th>Row</th>
-                <th>Inside</th>
-                <th>Outside</th>
-            </tr>
-        </thead>
-        <tbody id="startingOrderBody"></tbody>
-    </table>
+    <div class="table-container">
+        <table>
+            <thead>
+                <tr>
+                    <th>Driver</th>
+                    <th>Qualifying Time (ss.sss)</th>
+                    <th>Spin #</th>
+                </tr>
+            </thead>
+            <tbody id="drivers"></tbody>
+        </table>
+
+        <table id="startingOrder">
+            <thead>
+                <tr>
+                    <th>Row</th>
+                    <th>Inside Row</th>
+                    <th>Outside Row</th>
+                </tr>
+            </thead>
+            <tbody id="startingOrderBody">
+                <!-- dynamically filled -->
+            </tbody>
+        </table>
+    </div>
+
+    <button onclick="resetForm()">Reset Form</button>
 
     <script>
-        function restrictSpin(input) {
-            let val = input.value.trim();
-
-            if (val === "00") {
-                input.value = "00";
-                return;
-            }
-
-            let num = parseInt(val, 10);
-            if (!isNaN(num)) {
-                if (num < 0) num = 0;
-                if (num > 36) num = 36;
-                input.value = num.toString();
-            } else {
-                input.value = '';
+        function populateDriverTable() {
+            const tbody = document.getElementById('drivers');
+            tbody.innerHTML = '';
+            for (let i = 1; i <= 8; i++) {
+                const row = document.createElement('tr');
+                row.innerHTML = `
+                    <td><input type="text" placeholder="Driver ${i}" id="driver${i}" oninput="saveFormData(); updateGrid()"></td>
+                    <td><input type="text" placeholder="00.000" id="time${i}" oninput="formatTime(this); saveFormData(); updateGrid()"></td>
+                    <td><input type="text" min="0" max="36" id="spin${i}" oninput="restrictSpin(this); saveFormData(); updateGrid()"></td>
+                `;
+                tbody.appendChild(row);
             }
         }
 
-        function formatTime(input) {
-            input.value = input.value.replace(/[^0-9.]/g, '').substring(0, 6);
+        function resetForm() {
+            localStorage.removeItem('formData');
+            document.getElementById('fanQuestion').value = '';
+            document.getElementById('fanName').value = '';
+            document.getElementById('fanHometown').value = '';
+            populateDriverTable();
+            updateGrid();
         }
 
         function saveFormData() {
+            const data = {
+                drivers: [],
+                fanQuestion: document.getElementById('fanQuestion').value,
+                fanName: document.getElementById('fanName').value,
+                fanHometown: document.getElementById('fanHometown').value
+            };
+
             for (let i = 1; i <= 8; i++) {
-                localStorage.setItem(`driver${i}`, document.getElementById(`driver${i}`).value);
-                localStorage.setItem(`spin${i}`, document.getElementById(`spin${i}`).value);
-                localStorage.setItem(`qual${i}`, document.getElementById(`qual${i}`).value);
+                data.drivers.push({
+                    driver: document.getElementById('driver' + i).value,
+                    time: document.getElementById('time' + i).value,
+                    spin: document.getElementById('spin' + i).value
+                });
             }
+
+            localStorage.setItem('formData', JSON.stringify(data));
         }
 
         function loadFormData() {
-            for (let i = 1; i <= 8; i++) {
-                document.getElementById(`driver${i}`).value = localStorage.getItem(`driver${i}`) || '';
-                document.getElementById(`spin${i}`).value = localStorage.getItem(`spin${i}`) || '';
-                document.getElementById(`qual${i}`).value = localStorage.getItem(`qual${i}`) || '';
-            }
-        }
+            const data = JSON.parse(localStorage.getItem('formData'));
+            if (!data) return;
 
-        function clearForm() {
             for (let i = 1; i <= 8; i++) {
-                document.getElementById(`driver${i}`).value = '';
-                document.getElementById(`spin${i}`).value = '';
-                document.getElementById(`qual${i}`).value = '';
-                localStorage.removeItem(`driver${i}`);
-                localStorage.removeItem(`spin${i}`);
-                localStorage.removeItem(`qual${i}`);
+                document.getElementById('driver' + i).value = data.drivers[i - 1]?.driver || '';
+                document.getElementById('time' + i).value = data.drivers[i - 1]?.time || '';
+                document.getElementById('spin' + i).value = data.drivers[i - 1]?.spin || '';
             }
+
+            document.getElementById('fanQuestion').value = data.fanQuestion || '';
+            document.getElementById('fanName').value = data.fanName || '';
+            document.getElementById('fanHometown').value = data.fanHometown || '';
             updateGrid();
         }
 
         function updateGrid() {
-            const driverData = [];
-
+            const drivers = [];
             for (let i = 1; i <= 8; i++) {
-                const name = document.getElementById(`driver${i}`).value.trim();
-                const spin = document.getElementById(`spin${i}`).value.trim();
-
-                if (name && spin !== '') {
-                    let sortValue = (spin === "00") ? -1 : parseInt(spin, 10);
-                    if (!isNaN(sortValue) || spin === "00") {
-                        driverData.push({ name, spin, sortValue });
-                    }
+                const name = document.getElementById('driver' + i).value.trim();
+                const spin = parseInt(document.getElementById('spin' + i).value);
+                const time = parseFloat(document.getElementById('time' + i).value);
+                if (name && !isNaN(spin) && !isNaN(time)) {
+                    drivers.push({ name, spin, time });
                 }
             }
 
-            driverData.sort((a, b) => a.sortValue - b.sortValue);
+            drivers.sort((a, b) => {
+                if (a.spin === b.spin) {
+                    return a.time - b.time; // Lower qualifying time wins if spins are tied
+                }
+                return a.spin - b.spin; // Otherwise, sort by spin
+            });
 
-            const gridBody = document.getElementById("startingOrderBody");
-            gridBody.innerHTML = '';
-
-            for (let row = 0; row < driverData.length; row += 2) {
-                const tr = document.createElement("tr");
-
-                const rowNumber = Math.floor(row / 2) + 1;
-                const insideDriver = driverData[row]?.name || '';
-                const outsideDriver = driverData[row + 1]?.name || '';
-
+            const tbody = document.getElementById('startingOrderBody');
+            tbody.innerHTML = '';
+            for (let row = 0; row < 4; row++) {
+                const insideDriver = drivers[row * 2] || null; // 1st, 3rd, 5th, 7th
+                const outsideDriver = drivers[row * 2 + 1] || null; // 2nd, 4th, 6th, 8th
+                const tr = document.createElement('tr');
                 tr.innerHTML = `
-                    <td>${rowNumber}</td>
-                    <td>${insideDriver}</td>
-                    <td>${outsideDriver}</td>
+                    <td>${row + 1}</td>
+                    <td>${insideDriver ? insideDriver.name : ''}</td>
+                    <td>${outsideDriver ? outsideDriver.name : ''}</td>
                 `;
-                gridBody.appendChild(tr);
+                tbody.appendChild(tr);
             }
         }
 
-        // Load saved data and update grid on page load
-        window.onload = function() {
-            loadFormData();
-            updateGrid();
-        };
+        function restrictSpin(input) {
+            let value = parseInt(input.value);
+            if (isNaN(value) || value < 0) value = '';
+            else if (value > 36) value = 36;
+            input.value = value;
+        }
+
+        function formatTime(input) {
+            let value = input.value.replace(/[^\d.]/g, '');
+            const match = value.match(/^(\d{1,2})(\d{0,3})$/);
+            if (match) {
+                value = match[1];
+                if (match[2]) value += '.' + match[2];
+            }
+            input.value = value;
+        }
     </script>
 </body>
 </html>
