@@ -35,9 +35,27 @@
             background-color: #000;
             color: white;
         }
-        th:nth-child(1), td:nth-child(1) { width: 50%; }
-        th:nth-child(2), td:nth-child(2) { width: 30%; }
-        th:nth-child(3), td:nth-child(3) { width: 20%; }
+        th:nth-child(1), td:nth-child(1) {
+            width: 50%;
+            max-height: 7vw;
+            overflow: hidden;
+            word-wrap: break-word;
+            white-space: pre-wrap;
+            overflow-wrap: break-word;
+        }
+        th:nth-child(2), td:nth-child(2) { width: 25%; }
+        th:nth-child(3), td:nth-child(3) { width: 25%; }
+        th:nth-child(1), td:nth-child(1) input {
+            width: 100%;
+            box-sizing: border-box;
+            margin: 0 auto;
+            display: block;
+            word-wrap: break-word;
+            white-space: pre-wrap;
+            overflow-wrap: break-word;
+            max-height: 7vw;
+            overflow: hidden;
+        }
         input, textarea {
             width: 90%;
             padding: 8px;
@@ -47,20 +65,41 @@
             color: white;
             border: 1px solid #FFC107;
             box-sizing: border-box;
+            margin: 0 auto;
+            display: block;
         }
         .highlight {
             background-color: #FFC107;
             color: black;
             font-weight: bold;
         }
+        .header-container {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-bottom: 10px;
+        }
         .header {
             font-size: 6vw;
             font-weight: bold;
             color: #FFC107;
             text-transform: uppercase;
-            margin: 5px 0;
+            margin: 5px 10px;
             letter-spacing: 1px;
+            flex-grow: 1;
+            text-align: center;
         }
+        .logo {
+            width: 40px;
+            height: 40px;
+            margin-left: 10px;
+        }
+        #startingOrder th, #startingOrder td {
+            border: 1px solid black;
+        }
+        #startingOrder th:nth-child(1), #startingOrder td:nth-child(1) { max-width: 200px; } /* Constrain Row column width */
+        #startingOrder th:nth-child(2), #startingOrder td:nth-child(2) { width: 100%; }
+        #startingOrder th:nth-child(3), #startingOrder td:nth-child(3) { width: 100%; }
         #startingOrder tr td {
             background-color: #1E88E5;
             color: white;
@@ -77,37 +116,109 @@
         }
         .table-container {
             position: relative;
-            padding: 5px;
+            padding: 2px;
             display: flex;
             flex-direction: column;
-            gap: 20px;
+            gap: 10px;
             justify-content: center;
             align-items: center;
         }
         .fan-question {
-            margin: 20px 0;
+            margin: 20px auto;
             padding: 10px;
             border: 2px solid #FFC107;
             background-color: #000;
+            width: 90%;
+            display: block;
+            text-align: center;
         }
         .fan-question textarea {
-            height: 100px;
+            height: 10vw;
+            margin: 10px auto;
+            display: block;
+            word-wrap: break-word;
+            white-space: pre-wrap;
+            overflow-wrap: break-word;
         }
         .fan-info {
             display: flex;
-            flex-direction: column;
+            flex-direction: row;
             gap: 10px;
             margin-top: 10px;
+            align-items: center;
+            justify-content: center;
+            flex-wrap: wrap;
+        }
+        .fan-label {
+            font-size: 3.5vw;
+            color: #FFC107;
+            text-transform: uppercase;
+            margin-bottom: 0;
+            min-width: 100px;
+            text-align: right;
+            padding-right: 5px;
+        }
+        .fan-input-wrapper {
+            flex: 1;
+            min-width: 200px;
+        }
+        .fan-input-wrapper input {
+            height: 7vw; /* Force height to match 2 lines */
+            max-height: 7vw;
+            overflow: hidden;
+            word-wrap: break-word;
+            white-space: pre-wrap;
+            overflow-wrap: break-word;
+            text-align: left; /* Override center alignment for wrapping */
+        }
+        button {
+            padding: 10px 20px;
+            font-size: 3.5vw;
+            font-family: 'Oswald', sans-serif;
+            background-color: #FFC107;
+            color: black;
+            border: none;
+            cursor: pointer;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            margin: 20px auto;
+            display: block;
+        }
+        button:hover {
+            background-color: #ffdb58;
         }
         @media (max-width: 480px) {
             table { font-size: 4vw; }
             input, textarea { font-size: 4vw; padding: 6px; }
             .header { font-size: 7vw; }
+            button { font-size: 4vw; padding: 8px 16px; }
+            .logo { width: 30px; height: 30px; }
+            .fan-question textarea { height: 12vw; }
+            th:nth-child(1), td:nth-child(1) { max-height: 8vw; }
+            th:nth-child(1), td:nth-child(1) input { max-height: 8vw; }
+            .fan-label { font-size: 4vw; min-width: 80px; }
+            .fan-input-wrapper { min-width: 150px; }
+            .fan-info { flex-direction: column; align-items: stretch; }
+            .fan-input-wrapper input { height: 8vw; max-height: 8vw; }
         }
     </style>
 </head>
 <body onload="populateDriverTable(); loadFormData()">
-    <div class="header">REDRAW WHEEL ORDER</div>
+    <div class="header-container">
+        <img src="logo.png" alt="Logo" class="logo">
+        <div class="header">REDRAW WHEEL ORDER</div>
+    </div>
+
+    <div class="fan-question">
+        <div class="header">Fan Question of the Night</div>
+        <textarea id="fanQuestion" placeholder="Enter the fan's question here..." oninput="saveFormData()"></textarea>
+        <div class="fan-info">
+            <div class="fan-label">Fan Name</div>
+            <div class="fan-input-wrapper"><input type="text" id="fanName" placeholder="Fan's Name" oninput="saveFormData()"></div>
+            <div class="fan-label">Fan Hometown</div>
+            <div class="fan-input-wrapper"><input type="text" id="fanHometown" placeholder="Fan's Hometown" oninput="saveFormData()"></div>
+        </div>
+    </div>
 
     <div class="table-container">
         <table>
@@ -115,7 +226,7 @@
                 <tr>
                     <th>Driver</th>
                     <th>Qualifying Time (ss.sss)</th>
-                    <th>Spin Number</th>
+                    <th>Spin #</th>
                 </tr>
             </thead>
             <tbody id="drivers"></tbody>
@@ -124,9 +235,9 @@
         <table id="startingOrder">
             <thead>
                 <tr>
-                    <th>Start</th>
-                    <th>Driver</th>
-                    <th>Spin</th>
+                    <th>Row</th>
+                    <th>Inside Row</th>
+                    <th>Outside Row</th>
                 </tr>
             </thead>
             <tbody id="startingOrderBody">
@@ -135,14 +246,7 @@
         </table>
     </div>
 
-    <div class="fan-question">
-        <div class="header">Fan Question of the Night</div>
-        <textarea id="fanQuestion" placeholder="Enter the fan's question here..." oninput="saveFormData()"></textarea>
-        <div class="fan-info">
-            <input type="text" id="fanName" placeholder="Fan's Name" oninput="saveFormData()">
-            <input type="text" id="fanHometown" placeholder="Fan's Hometown" oninput="saveFormData()">
-        </div>
-    </div>
+    <button onclick="resetForm()">Reset Form</button>
 
     <script>
         function populateDriverTable() {
@@ -157,6 +261,15 @@
                 `;
                 tbody.appendChild(row);
             }
+        }
+
+        function resetForm() {
+            localStorage.removeItem('formData');
+            document.getElementById('fanQuestion').value = '';
+            document.getElementById('fanName').value = '';
+            document.getElementById('fanHometown').value = '';
+            populateDriverTable();
+            updateGrid();
         }
 
         function saveFormData() {
@@ -199,24 +312,32 @@
             for (let i = 1; i <= 8; i++) {
                 const name = document.getElementById('driver' + i).value.trim();
                 const spin = parseInt(document.getElementById('spin' + i).value);
-                if (name && !isNaN(spin)) {
-                    drivers.push({ name, spin });
+                const time = parseFloat(document.getElementById('time' + i).value);
+                if (name && !isNaN(spin) && !isNaN(time)) {
+                    drivers.push({ name, spin, time });
                 }
             }
 
-            drivers.sort((a, b) => a.spin - b.spin);
+            drivers.sort((a, b) => {
+                if (a.spin === b.spin) {
+                    return a.time - b.time; // Lower qualifying time wins if spins are tied
+                }
+                return a.spin - b.spin; // Otherwise, sort by spin
+            });
 
             const tbody = document.getElementById('startingOrderBody');
             tbody.innerHTML = '';
-            drivers.forEach((driver, idx) => {
-                const row = document.createElement('tr');
-                row.innerHTML = `
-                    <td>${idx + 1}</td>
-                    <td>${driver.name}</td>
-                    <td>${driver.spin}</td>
+            for (let row = 0; row < 4; row++) {
+                const insideDriver = drivers[row * 2] || null; // 1st, 3rd, 5th, 7th
+                const outsideDriver = drivers[row * 2 + 1] || null; // 2nd, 4th, 6th, 8th
+                const tr = document.createElement('tr');
+                tr.innerHTML = `
+                    <td>${row + 1}</td>
+                    <td>${insideDriver ? insideDriver.name : ''}</td>
+                    <td>${outsideDriver ? outsideDriver.name : ''}</td>
                 `;
-                tbody.appendChild(row);
-            });
+                tbody.appendChild(tr);
+            }
         }
 
         function restrictSpin(input) {
