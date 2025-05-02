@@ -106,7 +106,7 @@
         }
     </style>
 </head>
-<body onload="loadFormData()">
+<body onload="populateDriverTable(); loadFormData()">
     <div class="header">REDRAW WHEEL ORDER</div>
 
     <div class="table-container">
@@ -118,15 +118,7 @@
                     <th>Spin Number</th>
                 </tr>
             </thead>
-            <tbody id="drivers">
-                <!-- 8 driver input rows -->
-                ${[...Array(8)].map((_, i) => `
-                <tr>
-                    <td><input type="text" placeholder="Driver ${i+1}" id="driver${i+1}" oninput="saveFormData(); updateGrid()"></td>
-                    <td><input type="text" placeholder="00.000" id="time${i+1}" oninput="formatTime(this); saveFormData(); updateGrid()"></td>
-                    <td><input type="text" min="0" max="36" id="spin${i+1}" oninput="restrictSpin(this); saveFormData(); updateGrid()"></td>
-                </tr>`).join('')}
-            </tbody>
+            <tbody id="drivers"></tbody>
         </table>
 
         <table id="startingOrder">
@@ -153,6 +145,20 @@
     </div>
 
     <script>
+        function populateDriverTable() {
+            const tbody = document.getElementById('drivers');
+            tbody.innerHTML = '';
+            for (let i = 1; i <= 8; i++) {
+                const row = document.createElement('tr');
+                row.innerHTML = `
+                    <td><input type="text" placeholder="Driver ${i}" id="driver${i}" oninput="saveFormData(); updateGrid()"></td>
+                    <td><input type="text" placeholder="00.000" id="time${i}" oninput="formatTime(this); saveFormData(); updateGrid()"></td>
+                    <td><input type="text" min="0" max="36" id="spin${i}" oninput="restrictSpin(this); saveFormData(); updateGrid()"></td>
+                `;
+                tbody.appendChild(row);
+            }
+        }
+
         function saveFormData() {
             const data = {
                 drivers: [],
