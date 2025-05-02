@@ -1,13 +1,13 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>High Limit Dash Starting Order</title>
     <link rel="manifest" href="manifest.json">
     <link rel="apple-touch-icon" href="icon.png">
     <meta name="theme-color" content="#ff6600">
     <link rel="icon" href="favicon.ico" type="image/x-icon">
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>High Limit Dash Starting Order</title>
     <style>
         @import url('https://fonts.googleapis.com/css2?family=Oswald:wght@600&display=swap');
 
@@ -212,7 +212,7 @@
         }
     </style>
 </head>
-<body onload="populateDriverTable(); loadFormData()">
+<body onload="populateDriverTable(); loadFormData(); updateGrid();">
     <div class="header-container">
         <img src="logo.png" alt="Logo" class="logo">
         <div class="header">REDRAW WHEEL ORDER</div>
@@ -309,28 +309,6 @@
             localStorage.setItem('formData', JSON.stringify(data));
         }
 
-        function loadFormData() {
-            const data = JSON.parse(localStorage.getItem('formData'));
-            if (!data) return;
-
-            document.getElementById('fanQuestion').value = data.fanQuestion || '';
-            document.getElementById('fanName').value = data.fanName || '';
-            document.getElementById('fanHometown').value = data.fanHometown || '';
-
-            for (let i = 1; i <= 8; i++) {
-                document.getElementById('driver' + i).value = data.drivers[i - 1]?.driver || '';
-                document.getElementById('time' + i).value = data.drivers[i - 1]?.time || '';
-                document.getElementById('spin' + i).value = data.drivers[i - 1]?.spin || '';
-            }
-        }
-
-        function updateGrid() {
-            // You can customize this part for how you want to use the spin numbers
-        }
-
-        function formatTime(input) {
-            input.value = input.value.replace(/[^\d.]/g, '').slice(0, 6);
-        }
-    </script>
-</body>
-</html>
+        function loadFormData()
+::contentReference[oaicite:0]{index=0}
+ 
