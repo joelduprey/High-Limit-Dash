@@ -19,6 +19,7 @@
             color: white;
             font-size: 16px;
         }
+
         table {
             width: 100%;
             margin: 5px auto;
@@ -28,6 +29,7 @@
             border: 2px solid #FFC107;
             font-size: 3.5vw;
         }
+
         th, td {
             border: 2px solid #FFC107;
             padding: 8px;
@@ -35,6 +37,7 @@
             background-color: #000;
             color: white;
         }
+
         th:nth-child(1), td:nth-child(1) {
             width: 50%;
             max-height: 7vw;
@@ -43,8 +46,10 @@
             white-space: pre-wrap;
             overflow-wrap: break-word;
         }
+
         th:nth-child(2), td:nth-child(2) { width: 25%; }
         th:nth-child(3), td:nth-child(3) { width: 25%; }
+
         th:nth-child(1), td:nth-child(1) input {
             width: 100%;
             box-sizing: border-box;
@@ -56,6 +61,7 @@
             max-height: 7vw;
             overflow: hidden;
         }
+
         input, textarea {
             width: 90%;
             padding: 8px;
@@ -68,17 +74,20 @@
             margin: 0 auto;
             display: block;
         }
+
         .highlight {
             background-color: #FFC107;
             color: black;
             font-weight: bold;
         }
+
         .header-container {
             display: flex;
             align-items: center;
             justify-content: center;
             margin-bottom: 10px;
         }
+
         .header {
             font-size: 6vw;
             font-weight: bold;
@@ -89,31 +98,38 @@
             flex-grow: 1;
             text-align: center;
         }
+
         .logo {
             width: 40px;
             height: 40px;
             margin-left: 10px;
         }
+
         #startingOrder th, #startingOrder td {
             border: 1px solid black;
         }
-        #startingOrder th:nth-child(1), #startingOrder td:nth-child(1) { max-width: 200px; } /* Constrain Row column width */
-        #startingOrder th:nth-child(2), #startingOrder td:nth-child(2) { width: 100%; }
+
+        #startingOrder th:nth-child(1), #startingOrder td:nth-child(1) { max-width: 200px; }
+        #startingOrder th:nth-child(2), #startingOrder td:nth-child(2),
         #startingOrder th:nth-child(3), #startingOrder td:nth-child(3) { width: 100%; }
+
         #startingOrder tr td {
             background-color: #1E88E5;
             color: white;
             font-size: 3.5vw;
         }
+
         #startingOrder tr td:first-child {
             background-color: #FFC107;
             color: black;
             font-weight: bold;
         }
+
         #startingOrder th {
             background-color: #1E88E5;
             color: #FFC107;
         }
+
         .table-container {
             position: relative;
             padding: 2px;
@@ -123,6 +139,7 @@
             justify-content: center;
             align-items: center;
         }
+
         .fan-question {
             margin: 20px auto;
             padding: 10px;
@@ -132,14 +149,12 @@
             display: block;
             text-align: center;
         }
+
         .fan-question textarea {
             height: 10vw;
             margin: 10px auto;
-            display: block;
-            word-wrap: break-word;
-            white-space: pre-wrap;
-            overflow-wrap: break-word;
         }
+
         .fan-info {
             display: flex;
             flex-direction: row;
@@ -149,6 +164,7 @@
             justify-content: center;
             flex-wrap: wrap;
         }
+
         .fan-label {
             font-size: 3.5vw;
             color: #FFC107;
@@ -158,19 +174,16 @@
             text-align: right;
             padding-right: 5px;
         }
+
         .fan-input-wrapper {
             flex: 1;
             min-width: 200px;
         }
+
         .fan-input-wrapper input {
-            height: 7vw; /* Force height to match 2 lines */
-            max-height: 7vw;
-            overflow: hidden;
-            word-wrap: break-word;
-            white-space: pre-wrap;
-            overflow-wrap: break-word;
-            text-align: left; /* Override center alignment for wrapping */
+            height: 7vw;
         }
+
         button {
             padding: 10px 20px;
             font-size: 3.5vw;
@@ -184,9 +197,11 @@
             margin: 20px auto;
             display: block;
         }
+
         button:hover {
             background-color: #ffdb58;
         }
+
         @media (max-width: 480px) {
             table { font-size: 4vw; }
             input, textarea { font-size: 4vw; padding: 6px; }
@@ -194,12 +209,6 @@
             button { font-size: 4vw; padding: 8px 16px; }
             .logo { width: 30px; height: 30px; }
             .fan-question textarea { height: 12vw; }
-            th:nth-child(1), td:nth-child(1) { max-height: 8vw; }
-            th:nth-child(1), td:nth-child(1) input { max-height: 8vw; }
-            .fan-label { font-size: 4vw; min-width: 80px; }
-            .fan-input-wrapper { min-width: 150px; }
-            .fan-info { flex-direction: column; align-items: stretch; }
-            .fan-input-wrapper input { height: 8vw; max-height: 8vw; }
         }
     </style>
 </head>
@@ -240,15 +249,15 @@
                     <th>Outside Row</th>
                 </tr>
             </thead>
-            <tbody id="startingOrderBody">
-                <!-- dynamically filled -->
-            </tbody>
+            <tbody id="startingOrderBody"></tbody>
         </table>
     </div>
 
     <button onclick="resetForm()">Reset Form</button>
 
     <script>
+        const validSpinValues = ["00", ...Array.from({ length: 37 }, (_, i) => i.toString())];
+
         function populateDriverTable() {
             const tbody = document.getElementById('drivers');
             tbody.innerHTML = '';
@@ -257,9 +266,18 @@
                 row.innerHTML = `
                     <td><input type="text" placeholder="Driver ${i}" id="driver${i}" oninput="saveFormData(); updateGrid()"></td>
                     <td><input type="text" placeholder="00.000" id="time${i}" oninput="formatTime(this); saveFormData(); updateGrid()"></td>
-                    <td><input type="text" min="0" max="36" id="spin${i}" oninput="restrictSpin(this); saveFormData(); updateGrid()"></td>
+                    <td><input type="text" placeholder="00 or 0-36" id="spin${i}" oninput="validateSpin(this); saveFormData(); updateGrid()"></td>
                 `;
                 tbody.appendChild(row);
+            }
+        }
+
+        function validateSpin(input) {
+            let val = input.value.trim();
+            if (val === '') return;
+            if (!validSpinValues.includes(val)) {
+                input.value = '';
+                alert('Spin must be "00" or a number from 0 to 36.');
             }
         }
 
@@ -295,66 +313,23 @@
             const data = JSON.parse(localStorage.getItem('formData'));
             if (!data) return;
 
+            document.getElementById('fanQuestion').value = data.fanQuestion || '';
+            document.getElementById('fanName').value = data.fanName || '';
+            document.getElementById('fanHometown').value = data.fanHometown || '';
+
             for (let i = 1; i <= 8; i++) {
                 document.getElementById('driver' + i).value = data.drivers[i - 1]?.driver || '';
                 document.getElementById('time' + i).value = data.drivers[i - 1]?.time || '';
                 document.getElementById('spin' + i).value = data.drivers[i - 1]?.spin || '';
             }
-
-            document.getElementById('fanQuestion').value = data.fanQuestion || '';
-            document.getElementById('fanName').value = data.fanName || '';
-            document.getElementById('fanHometown').value = data.fanHometown || '';
-            updateGrid();
         }
 
         function updateGrid() {
-            const drivers = [];
-            for (let i = 1; i <= 8; i++) {
-                const name = document.getElementById('driver' + i).value.trim();
-                const spin = parseInt(document.getElementById('spin' + i).value);
-                const time = parseFloat(document.getElementById('time' + i).value);
-                if (name && !isNaN(spin) && !isNaN(time)) {
-                    drivers.push({ name, spin, time });
-                }
-            }
-
-            drivers.sort((a, b) => {
-                if (a.spin === b.spin) {
-                    return a.time - b.time; // Lower qualifying time wins if spins are tied
-                }
-                return a.spin - b.spin; // Otherwise, sort by spin
-            });
-
-            const tbody = document.getElementById('startingOrderBody');
-            tbody.innerHTML = '';
-            for (let row = 0; row < 4; row++) {
-                const insideDriver = drivers[row * 2] || null; // 1st, 3rd, 5th, 7th
-                const outsideDriver = drivers[row * 2 + 1] || null; // 2nd, 4th, 6th, 8th
-                const tr = document.createElement('tr');
-                tr.innerHTML = `
-                    <td>${row + 1}</td>
-                    <td>${insideDriver ? insideDriver.name : ''}</td>
-                    <td>${outsideDriver ? outsideDriver.name : ''}</td>
-                `;
-                tbody.appendChild(tr);
-            }
-        }
-
-        function restrictSpin(input) {
-            let value = parseInt(input.value);
-            if (isNaN(value) || value < 0) value = '';
-            else if (value > 36) value = 36;
-            input.value = value;
+            // You can customize this part for how you want to use the spin numbers
         }
 
         function formatTime(input) {
-            let value = input.value.replace(/[^\d.]/g, '');
-            const match = value.match(/^(\d{1,2})(\d{0,3})$/);
-            if (match) {
-                value = match[1];
-                if (match[2]) value += '.' + match[2];
-            }
-            input.value = value;
+            input.value = input.value.replace(/[^\d.]/g, '').slice(0, 6);
         }
     </script>
 </body>
