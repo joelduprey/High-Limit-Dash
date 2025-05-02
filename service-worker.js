@@ -1,4 +1,4 @@
-const CACHE_NAME = 'high-limit-dash-cache-v1';
+const CACHE_NAME = 'high-limit-dash-cache-v5';
 const urlsToCache = [
   'index.html',
   'icon.png',
