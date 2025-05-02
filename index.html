@@ -213,13 +213,21 @@
             });
         }
 
-        function formatTime(input) {
-            input.value = input.value.replace(/[^0-9.]/g, '').substring(0, 6);
+        function restrictSpin(input) {
+            let value = parseInt(input.value);
+            if (isNaN(value) || value < 0) value = '';
+            else if (value > 36) value = 36;
+            input.value = value;
         }
 
-        function restrictSpin(input) {
-            input.value = input.value.replace(/[^0-9]/g, '');
-            if (parseInt(input.value) > 36) input.value = '36';
+        function formatTime(input) {
+            let value = input.value.replace(/[^\d.]/g, '');
+            const match = value.match(/^(\d{1,2})(\d{0,3})$/);
+            if (match) {
+                value = match[1];
+                if (match[2]) value += '.' + match[2];
+            }
+            input.value = value;
         }
     </script>
 </body>
