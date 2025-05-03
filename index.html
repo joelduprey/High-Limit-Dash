@@ -2,250 +2,126 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>High Limit Dash Starting Order</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Starting Order</title>
     <style>
-        @import url('https://fonts.googleapis.com/css2?family=Oswald:wght@600&display=swap'); /* Racing-style font */
-        
         body {
-            font-family: 'Oswald', sans-serif;
-            text-align: center;
-            margin: 10px;
-            background-color: #1a1a1a; /* Darker black background */
-            color: white;
-            font-size: 16px; /* Base font size for mobile */
+            font-family: Arial, sans-serif;
+            padding: 20px;
+            background-color: #f4f4f9;
         }
         table {
             width: 100%;
-            max-width: 100%; /* Ensure table fits within screen width */
-            margin: 5px auto;
             border-collapse: collapse;
-            background-color: #000000; /* Black background for table */
-            color: white;
-            border: 2px solid #FFC107; /* Yellow borders */
-            font-size: 3.5vw; /* Responsive font size for table */
+            margin-top: 20px;
         }
-        th, td {
-            border: 2px solid #FFC107; /* Yellow borders */
+        td, th {
             padding: 8px;
             text-align: center;
-            text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.8); /* Add shadow for readability */
-            background-color: #000000; /* Black background for table cells */
-            color: white; /* White text */
+            border: 1px solid #ddd;
         }
-        /* Widen the Driver column */
-        th:nth-child(1), td:nth-child(1) {
-            width: 50%; /* Make Driver column wider */
-        }
-        th:nth-child(2), td:nth-child(2) {
-            width: 30%; /* Qualifying Time column */
-        }
-        th:nth-child(3), td:nth-child(3) {
-            width: 20%; /* Spin Number column */
+        th {
+            background-color: #4CAF50;
+            color: white;
         }
         input {
-            width: 90%; /* Slightly less than full width for padding */
-            padding: 8px;
-            font-size: 3.5vw; /* Responsive font size for inputs */
-            text-align: center;
-            background-color: #000000; /* Black background for inputs */
-            color: white; /* White text */
-            border: 1px solid #FFC107; /* Yellow border */
-            box-sizing: border-box; /* Ensure padding doesn’t affect width */
+            padding: 6px;
+            width: 100px;
         }
-        .highlight {
-            background-color: #FFC107; /* Yellow highlight */
-            color: black;
-            font-weight: bold;
+        .driver-row {
+            text-align: center;
         }
         .header {
-            font-size: 6vw; /* Responsive font size for headers */
             font-weight: bold;
-            color: #FFC107; /* Yellow headers */
-            text-transform: uppercase;
-            margin: 5px 0;
-            letter-spacing: 1px;
-        }
-        #startingOrder tr td {
-            background-color: #1E88E5; /* Blue background for starting order table */
-            color: white;
-            font-size: 3.5vw; /* Responsive font size */
-        }
-        #startingOrder tr td:first-child {
-            background-color: #FFC107; /* Yellow for row numbers */
-            color: black; /* Black text for contrast */
-            font-weight: bold;
-        }
-        #startingOrder th {
-            background-color: #1E88E5; /* Blue header background */
-            color: #FFC107; /* Yellow header text */
-        }
-        /* Container for the top table, background image removed */
-        .table-container {
-            position: relative;
-            padding: 5px;
-            min-height: auto; /* No need for extra height without the background image */
-            display: flex;
-            justify-content: center;
-            align-items: center;
-        }
-        /* Media query for smaller screens */
-        @media (max-width: 480px) {
-            table {
-                font-size: 4vw; /* Slightly larger font for very small screens */
-            }
-            input {
-                font-size: 4vw;
-                padding: 6px;
-            }
-            .header {
-                font-size: 7vw;
-            }
-            .table-container {
-                min-height: auto; /* Adjust for smaller screens */
-            }
         }
     </style>
 </head>
-<body onload="loadFormData()">
+<body>
 
-    <!-- Redraw Wheel Order Header -->
-    <div class="header">REDRAW WHEEL ORDER</div>
+<h1>Driver Starting Order</h1>
 
-    <!-- Wrap the top table in a container, no background image -->
-    <div class="table-container">
-        <table>
-            <thead>
-                <tr>
-                    <th>Driver</th>
-                    <th>Qualifying Time (ss.sss)</th>
-                    <th>Spin Number</th>
-                </tr>
-            </thead>
-            <tbody id="drivers">
-                <!-- Repeat for each driver -->
-                <tr>
-                    <td><input type="text" placeholder="Driver 1" id="driver1" oninput="saveFormData(); updateGrid()"></td>
-                    <td><input type="text" placeholder="00.000" id="time1" oninput="formatTime(this); saveFormData(); updateGrid()"></td>
-                    <td><input type="text" min="0" max="36" id="spin1" oninput="restrictSpin(this); saveFormData(); updateGrid()"></td>
-                </tr>
-                <tr>
-                    <td><input type="text" placeholder="Driver 2" id="driver2" oninput="saveFormData(); updateGrid()"></td>
-                    <td><input type="text" placeholder="00.000" id="time2" oninput="formatTime(this); saveFormData(); updateGrid()"></td>
-                    <td><input type="text" min="0" max="36" id="spin2" oninput="restrictSpin(this); saveFormData(); updateGrid()"></td>
-                </tr>
-                <!-- Add remaining drivers similarly (Driver 3 to Driver 8) -->
-            </tbody>
-        </table>
-    </div>
-
-    <div class="header">Starting Order</div>
-
+<form id="startingOrderForm">
+    <h3>Enter Driver Names and Spin Numbers:</h3>
     <table>
-        <thead>
-            <tr>
-                <th>Row</th>
-                <th>Inside</th>
-                <th>Outside</th>
-            </tr>
-        </thead>
-        <tbody id="startingOrder">
-            <!-- JavaScript will populate this -->
-        </tbody>
+        <tr>
+            <th>Driver</th>
+            <th>Qualifying Time</th>
+            <th>Spin Number</th>
+        </tr>
+        <tr><td><input type="text" id="driver1" placeholder="Driver 1"></td><td><input type="number" id="time1" placeholder="Time"></td><td><input type="number" id="spin1" placeholder="Spin" max="36" min="0"></td></tr>
+        <tr><td><input type="text" id="driver2" placeholder="Driver 2"></td><td><input type="number" id="time2" placeholder="Time"></td><td><input type="number" id="spin2" placeholder="Spin" max="36" min="0"></td></tr>
+        <tr><td><input type="text" id="driver3" placeholder="Driver 3"></td><td><input type="number" id="time3" placeholder="Time"></td><td><input type="number" id="spin3" placeholder="Spin" max="36" min="0"></td></tr>
+        <tr><td><input type="text" id="driver4" placeholder="Driver 4"></td><td><input type="number" id="time4" placeholder="Time"></td><td><input type="number" id="spin4" placeholder="Spin" max="36" min="0"></td></tr>
+        <tr><td><input type="text" id="driver5" placeholder="Driver 5"></td><td><input type="number" id="time5" placeholder="Time"></td><td><input type="number" id="spin5" placeholder="Spin" max="36" min="0"></td></tr>
+        <tr><td><input type="text" id="driver6" placeholder="Driver 6"></td><td><input type="number" id="time6" placeholder="Time"></td><td><input type="number" id="spin6" placeholder="Spin" max="36" min="0"></td></tr>
+        <tr><td><input type="text" id="driver7" placeholder="Driver 7"></td><td><input type="number" id="time7" placeholder="Time"></td><td><input type="number" id="spin7" placeholder="Spin" max="36" min="0"></td></tr>
+        <tr><td><input type="text" id="driver8" placeholder="Driver 8"></td><td><input type="number" id="time8" placeholder="Time"></td><td><input type="number" id="spin8" placeholder="Spin" max="36" min="0"></td></tr>
     </table>
 
-    <script>
-        // Format the Qualifying Time input to enforce 00.000 format
-        function formatTime(input) {
-            let value = input.value.replace(/[^0-9]/g, ''); // Remove non-numeric characters
-            if (value.length > 5) {
-                value = value.substring(0, 5); // Limit to 5 digits (e.g., 12345 -> 12.345)
-            }
-            if (value.length > 2) {
-                // Insert period between the second and third digits
-                value = value.substring(0, 2) + '.' + value.substring(2);
-            }
-            input.value = value;
+    <button type="button" onclick="updateStartingOrder()">Update Starting Order</button>
+</form>
+
+<h3>Starting Order:</h3>
+<table id="startingOrder">
+    <tr>
+        <th>Row</th>
+        <th>Inside</th>
+        <th>Outside</th>
+    </tr>
+    <tr>
+        <td>Row 1</td>
+        <td id="row1Inside"></td>
+        <td id="row1Outside"></td>
+    </tr>
+    <tr>
+        <td>Row 2</td>
+        <td id="row2Inside"></td>
+        <td id="row2Outside"></td>
+    </tr>
+    <tr>
+        <td>Row 3</td>
+        <td id="row3Inside"></td>
+        <td id="row3Outside"></td>
+    </tr>
+    <tr>
+        <td>Row 4</td>
+        <td id="row4Inside"></td>
+        <td id="row4Outside"></td>
+    </tr>
+</table>
+
+<script>
+function updateStartingOrder() {
+    // Collect driver data
+    let drivers = [];
+    for (let i = 1; i <= 8; i++) {
+        let driverName = document.getElementById('driver' + i).value;
+        let driverTime = document.getElementById('time' + i).value;
+        let driverSpin = document.getElementById('spin' + i).value;
+        
+        if (driverName && driverTime !== "" && driverSpin !== "") {
+            drivers.push({
+                name: driverName,
+                time: parseFloat(driverTime),
+                spin: parseInt(driverSpin),
+                row: i
+            });
         }
+    }
 
-        // Restrict Spin Number input to 00, 0-36
-        function restrictSpin(input) {
-            let value = input.value;
-            value = value.replace(/[^0-9]/g, '');
-            if (value === "00") {
-                input.value = "00"; // Keep 00 as valid
-                return;
-            }
-            let num = parseInt(value, 10);
-            if (value === "" || (num >= 0 && num <= 36)) {
-                input.value = value;
-            } else {
-                input.value = value.substring(0, value.length - 1);
-            }
-        }
+    // Sort by qualifying time
+    drivers.sort((a, b) => a.time - b.time);
 
-        // Save form data to localStorage
-        function saveFormData() {
-            for (let i = 1; i <= 8; i++) {
-                let driver = document.getElementById(`driver${i}`).value;
-                let time = document.getElementById(`time${i}`).value;
-                let spin = document.getElementById(`spin${i}`).value;
-                localStorage.setItem(`driver${i}`, driver);
-                localStorage.setItem(`time${i}`, time);
-                localStorage.setItem(`spin${i}`, spin);
-            }
-        }
+    // Populate the starting order table
+    for (let i = 0; i < drivers.length; i++) {
+        let driver = drivers[i];
+        let rowNum = Math.floor(i / 2) + 1;
+        let pos = i % 2 === 0 ? 'Inside' : 'Outside';
 
-        // Load form data from localStorage
-        function loadFormData() {
-            for (let i = 1; i <= 8; i++) {
-                let driver = localStorage.getItem(`driver${i}`);
-                let time = localStorage.getItem(`time${i}`);
-                let spin = localStorage.getItem(`spin${i}`);
-                if (driver) document.getElementById(`driver${i}`).value = driver;
-                if (time) document.getElementById(`time${i}`).value = time;
-                if (spin) document.getElementById(`spin${i}`).value = spin;
-            }
-            updateGrid();
-        }
+        document.getElementById('row' + rowNum + pos).innerHTML = driver.name + " (" + driver.spin + ")";
+    }
+}
+</script>
 
-        // Update the starting order grid
-        function updateGrid() {
-            let drivers = [];
-            for (let i = 1; i <= 8; i++) {
-                let driver = document.getElementById(`driver${i}`).value;
-                let time = document.getElementById(`time${i}`).value;
-                let spin = document.getElementById(`spin${i}`).value;
-                if (driver && time && spin) {
-                    drivers.push({ driver, time, spin });
-                }
-            }
-
-            // Sort drivers based on qualifying time
-            drivers.sort((a, b) => parseFloat(a.time) - parseFloat(b.time));
-
-            // Display drivers in the starting order
-            let startingOrder = document.getElementById('startingOrder');
-            startingOrder.innerHTML = '';
-
-            for (let i = 0; i < drivers.length; i++) {
-                let row = Math.floor(i / 2) + 1; // Determine row number
-                let insideOutside = i % 2 === 0 ? 'Inside' : 'Outside';
-                let tr = document.createElement('tr');
-                let tdRow = document.createElement('td');
-                let tdInside = document.createElement('td');
-                let tdOutside = document.createElement('td');
-                
-                tdRow.textContent = row;
-                tdInside.textContent = i % 2 === 0 ? drivers[i].driver : '';
-                tdOutside.textContent = i % 2 !== 0 ? drivers[i].driver : '';
-
-                tr.appendChild(tdRow);
-                tr.appendChild(tdInside);
-                tr.appendChild(tdOutside);
-                startingOrder.appendChild(tr);
-            }
-        }
-    </script>
 </body>
 </html>
