@@ -222,8 +222,25 @@
         </tbody>
     </table>
 
+    <!-- Reset Button -->
+    <div>
+        <button onclick="resetForm()" style="padding: 10px 20px; font-size: 3.5vw; background-color: #FF5722; color: white; border: none; border-radius: 5px;">Reset</button>
+    </div>
+
     <script>
         // Add JavaScript code here (such as loadFormData(), saveFormData(), etc.)
+        // Reset function to clear all input fields
+        function resetForm() {
+            // Clear all text inputs
+            document.querySelectorAll('input[type="text"]').forEach(input => input.value = '');
+
+            // Clear all textareas
+            document.querySelectorAll('textarea').forEach(textarea => textarea.value = '');
+
+            // Optionally, reset the starting order table as well
+            const startingOrderTable = document.getElementById("startingOrder").getElementsByTagName("tbody")[0];
+            startingOrderTable.innerHTML = ''; // Clear all rows in the table
+        }
     </script>
 </body>
 </html>
