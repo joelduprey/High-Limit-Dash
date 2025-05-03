@@ -43,7 +43,7 @@
         th:nth-child(3), td:nth-child(3) {
             width: 20%; /* Spin Number column */
         }
-        input {
+        input, textarea {
             width: 90%; /* Slightly less than full width for padding */
             padding: 8px;
             font-size: 3.5vw; /* Responsive font size for inputs */
@@ -52,6 +52,11 @@
             color: white; /* White text */
             border: 1px solid #FFC107; /* Yellow border */
             box-sizing: border-box; /* Ensure padding doesn’t affect width */
+            font-family: 'Oswald', sans-serif;
+        }
+        textarea {
+            resize: none; /* Prevent resizing */
+            height: 60px; /* Fixed height for 3 lines */
         }
         .highlight {
             background-color: #FFC107; /* Yellow highlight */
@@ -106,12 +111,42 @@
             background-color: #1E88E5; /* Blue on hover */
             color: white;
         }
+        /* Container for fan info inputs */
+        .fan-info-container {
+            margin: 10px auto;
+            max-width: 600px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 10px;
+        }
+        .fan-info-label {
+            font-size: 4vw;
+            color: #FFC107;
+            text-transform: uppercase;
+        }
+        .fan-info-input, .fan-info-textarea {
+            width: 100%;
+            max-width: 400px;
+            padding: 8px;
+            font-size: 4vw; /* Responsive font size */
+            text-align: center;
+            background-color: #000000;
+            color: white;
+            border: 1px solid #FFC107;
+            font-family: 'Oswald', sans-serif;
+            box-sizing: border-box;
+        }
+        .fan-info-textarea {
+            height: 60px; /* Fixed height for 3 lines */
+            resize: none;
+        }
         /* Media query for smaller screens */
         @media (max-width: 480px) {
             table {
                 font-size: 4vw; /* Slightly larger font for very small screens */
             }
-            input {
+            input, textarea {
                 font-size: 4vw;
                 padding: 6px;
             }
@@ -125,10 +160,29 @@
                 font-size: 5vw;
                 padding: 8px 16px;
             }
+            .fan-info-input, .fan-info-textarea, .fan-info-label {
+                font-size: 5vw;
+            }
         }
     </style>
 </head>
 <body onload="loadFormData()">
+
+    <!-- Fan Info Inputs -->
+    <div class="fan-info-container">
+        <div>
+            <label for="fanQuestion" class="fan-info-label">Fan Question of the Night</label>
+            <textarea id="fanQuestion" class="fan-info-textarea" placeholder="Enter fan question" rows="3" oninput="saveFormData()"></textarea>
+        </div>
+        <div>
+            <label for="fanName" class="fan-info-label">Fan’s Name</label>
+            <input type="text" id="fanName" class="fan-info-input" placeholder="Enter fan’s name" oninput="saveFormData()">
+        </div>
+        <div>
+            <label for="fanHometown" class="fan-info-label">Fan’s Hometown</label>
+            <input type="text" id="fanHometown" class="fan-info-input" placeholder="Enter fan’s hometown" oninput="saveFormData()">
+        </div>
+    </div>
 
     <!-- Redraw Wheel Order Header -->
     <div class="header">REDRAW WHEEL ORDER</div>
@@ -209,11 +263,19 @@
     <script>
         // Helper function to load data from localStorage if available
         function loadFormData() {
+            // Load fan info
+            let fanQuestion = localStorage.getItem('fanQuestion');
+            let fanName = localStorage.getItem('fanName');
+            let fanHometown = localStorage.getItem('fanHometown');
+            if (fanQuestion) document.getElementById('fanQuestion').value = fanQuestion;
+            if (fanName) document.getElementById('fanName').value = fanName;
+            if (fanHometown) document.getElementById('fanHometown').value = fanHometown;
+
+            // Load driver data
             for (let i = 1; i <= 8; i++) {
                 let driver = localStorage.getItem('driver' + i);
                 let time = localStorage.getItem('time' + i);
                 let spin = localStorage.getItem('spin' + i);
-
                 if (driver) document.getElementById('driver' + i).value = driver;
                 if (time) document.getElementById('time' + i).value = time;
                 if (spin) document.getElementById('spin' + i).value = spin;
@@ -223,6 +285,12 @@
 
         // Save form data to localStorage
         function saveFormData() {
+            // Save fan info
+            localStorage.setItem('fanQuestion', document.getElementById('fanQuestion').value);
+            localStorage.setItem('fanName', document.getElementById('fanName').value);
+            localStorage.setItem('fanHometown', document.getElementById('fanHometown').value);
+
+            // Save driver data
             for (let i = 1; i <= 8; i++) {
                 localStorage.setItem('driver' + i, document.getElementById('driver' + i).value);
                 localStorage.setItem('time' + i, document.getElementById('time' + i).value);
@@ -254,7 +322,6 @@
                 let driver = document.getElementById('driver' + i).value;
                 let time = document.getElementById('time' + i).value;
                 let spin = parseInt(document.getElementById('spin' + i).value);
-
                 if (driver && time && !isNaN(spin)) {
                     drivers.push({ driver, time, spin });
                 }
@@ -296,6 +363,15 @@
         function resetForm() {
             console.log('resetForm called'); // Debug log
             if (confirm('Are you sure you want to reset all data? This cannot be undone.')) {
+                // Clear fan info
+                document.getElementById('fanQuestion').value = '';
+                document.getElementById('fanName').value = '';
+                document.getElementById('fanHometown').value = '';
+                localStorage.removeItem('fanQuestion');
+                localStorage.removeItem('fanName');
+                localStorage.removeItem('fanHometown');
+
+                // Clear driver data
                 for (let i = 1; i <= 8; i++) {
                     document.getElementById('driver' + i).value = '';
                     document.getElementById('time' + i).value = '';
