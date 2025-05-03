@@ -144,7 +144,6 @@
                 </tr>
             </thead>
             <tbody id="drivers">
-                <!-- Added 2 extra rows for drivers -->
                 <tr>
                     <td><input type="text" placeholder="Driver 1" id="driver1" oninput="saveFormData(); updateGrid()"></td>
                     <td><input type="text" placeholder="00.000" id="time1" oninput="formatTime(this); saveFormData(); updateGrid()"></td>
@@ -293,17 +292,20 @@
             });
         }
 
-        // Reset all inputs and localStorage
+        // Reset all inputs and localStorage with confirmation
         function resetForm() {
-            for (let i = 1; i <= 8; i++) {
-                document.getElementById('driver' + i).value = '';
-                document.getElementById('time' + i).value = '';
-                document.getElementById('spin' + i).value = '';
-                localStorage.removeItem('driver' + i);
-                localStorage.removeItem('time' + i);
-                localStorage.removeItem('spin' + i);
+            console.log('resetForm called'); // Debug log
+            if (confirm('Are you sure you want to reset all data? This cannot be undone.')) {
+                for (let i = 1; i <= 8; i++) {
+                    document.getElementById('driver' + i).value = '';
+                    document.getElementById('time' + i).value = '';
+                    document.getElementById('spin' + i).value = '';
+                    localStorage.removeItem('driver' + i);
+                    localStorage.removeItem('time' + i);
+                    localStorage.removeItem('spin' + i);
+                }
+                updateGrid();
             }
-            updateGrid();
         }
     </script>
 </body>
