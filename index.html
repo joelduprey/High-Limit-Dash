@@ -207,7 +207,7 @@
             }
         }
 
-        // Format time input to ensure it's in ss.sss format
+        // Format time as mm.ss.sss
         function formatTime(input) {
             let value = input.value.replace(/[^0-9.]/g, '');
             if (value.indexOf('.') === -1) {
@@ -262,7 +262,7 @@
                 row.appendChild(timeCell);
 
                 let spinCell = document.createElement('td');
-                spinCell.textContent = driver.spin;
+                spinCell.textContent = driver.spin.toString().padStart(2, '0'); // Ensure two digits for spin
                 row.appendChild(spinCell);
 
                 tableBody.appendChild(row);
