@@ -2,51 +2,211 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Race Grid</title>
-</head>
-<body>
-    <h1>Race Grid Setup</h1>
-    <form onsubmit="saveFormData(); return false;">
-        <!-- Form for input -->
-        <label for="fanQuestion">Fan Question:</label>
-        <input type="text" id="fanQuestion"><br>
-        <label for="fanName">Fan Name:</label>
-        <input type="text" id="fanName"><br>
-        <label for="fanHometown">Fan Hometown:</label>
-        <input type="text" id="fanHometown"><br>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>High Limit Dash Starting Order</title>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Oswald:wght@600&display=swap'); /* Racing-style font */
         
-        <!-- Driver inputs -->
-        <h3>Driver Information</h3>
-        <div id="driverInputs">
-            <div>
-                <label for="driver1">Driver 1:</label>
-                <input type="text" id="driver1">
-                <label for="time1">Time:</label>
-                <input type="text" id="time1">
-                <label for="spin1">Spin:</label>
-                <input type="text" id="spin1">
-            </div>
-            <!-- Repeat similar blocks for drivers 2 to 8 -->
-        </div>
-        
-        <button type="submit">Save</button>
-    </form>
+        body {
+            font-family: 'Oswald', sans-serif;
+            text-align: center;
+            margin: 10px;
+            background-color: #1a1a1a; /* Darker black background */
+            color: white;
+            font-size: 16px; /* Base font size for mobile */
+        }
+        table {
+            width: 100%;
+            max-width: 100%; /* Ensure table fits within screen width */
+            margin: 5px auto;
+            border-collapse: collapse;
+            background-color: #000000; /* Black background for table */
+            color: white;
+            border: 2px solid #FFC107; /* Yellow borders */
+            font-size: 3.5vw; /* Responsive font size for table */
+        }
+        th, td {
+            border: 2px solid #FFC107; /* Yellow borders */
+            padding: 8px;
+            text-align: center;
+            text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.8); /* Add shadow for readability */
+            background-color: #000000; /* Black background for table cells */
+            color: white; /* White text */
+        }
+        /* Widen the Driver column */
+        th:nth-child(1), td:nth-child(1) {
+            width: 50%; /* Make Driver column wider */
+        }
+        th:nth-child(2), td:nth-child(2) {
+            width: 30%; /* Qualifying Time column */
+        }
+        th:nth-child(3), td:nth-child(3) {
+            width: 20%; /* Spin Number column */
+        }
+        input {
+            width: 90%; /* Slightly less than full width for padding */
+            padding: 8px;
+            font-size: 3.5vw; /* Responsive font size for inputs */
+            text-align: center;
+            background-color: #000000; /* Black background for inputs */
+            color: white; /* White text */
+            border: 1px solid #FFC107; /* Yellow border */
+            box-sizing: border-box; /* Ensure padding doesn’t affect width */
+        }
+        .highlight {
+            background-color: #FFC107; /* Yellow highlight */
+            color: black;
+            font-weight: bold;
+        }
+        .header {
+            font-size: 6vw; /* Responsive font size for headers */
+            font-weight: bold;
+            color: #FFC107; /* Yellow headers */
+            text-transform: uppercase;
+            margin: 5px 0;
+            letter-spacing: 1px;
+        }
+        #startingOrder tr td {
+            background-color: #1E88E5; /* Blue background for starting order table */
+            color: white;
+            font-size: 3.5vw; /* Responsive font size */
+        }
+        #startingOrder tr td:first-child {
+            background-color: #FFC107; /* Yellow for row numbers */
+            color: black; /* Black text for contrast */
+            font-weight: bold;
+        }
+        #startingOrder th {
+            background-color: #1E88E5; /* Blue header background */
+            color: #FFC107; /* Yellow header text */
+        }
+        /* Container for the top table, background image removed */
+        .table-container {
+            position: relative;
+            padding: 5px;
+            min-height: auto; /* No need for extra height without the background image */
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+        /* Media query for smaller screens */
+        @media (max-width: 480px) {
+            table {
+                font-size: 4vw; /* Slightly larger font for very small screens */
+            }
+            input {
+                font-size: 4vw;
+                padding: 6px;
+            }
+            .header {
+                font-size: 7vw;
+            }
+            .table-container {
+                min-height: auto; /* Adjust for smaller screens */
+            }
+        }
 
-    <h3>Starting Grid</h3>
-    <table border="1">
-        <thead>
-            <tr>
-                <th>Position</th>
-                <th>Driver</th>
-                <th>Time</th>
-                <th>Spin</th>
-            </tr>
-        </thead>
-        <tbody id="startingOrder">
-            <!-- Table rows will be added dynamically -->
-        </tbody>
-    </table>
+        /* New styling for the "Fan Question of the Night" section */
+        .fan-question {
+            margin-top: 20px;
+            padding: 10px;
+            background-color: #FFC107;
+            color: black;
+            border-radius: 5px;
+        }
+
+        .fan-question textarea {
+            width: 90%;
+            margin: 5px 0;
+            padding: 8px;
+            font-size: 3.5vw;
+            background-color: #000000;
+            color: white;
+            border: 1px solid #FFC107;
+            resize: none; /* Prevent resizing */
+            box-sizing: border-box;
+        }
+
+        .fan-name, .fan-hometown {
+            width: 90%;
+            padding: 8px;
+            font-size: 3.5vw;
+            background-color: #000000;
+            color: white;
+            border: 1px solid #FFC107;
+            resize: none;
+            box-sizing: border-box;
+        }
+    </style>
+</head>
+<body onload="loadFormData()">
+
+    <!-- Fan Question of the Night Section -->
+    <div class="fan-question">
+        <div class="header">Fan Question of the Night</div>
+        <textarea id="fanQuestion" rows="3" placeholder="Enter your question here..." oninput="saveFormData()"></textarea>
+        <textarea id="fanName" class="fan-name" rows="2" placeholder="Enter your name..." oninput="saveFormData()"></textarea>
+        <textarea id="fanHometown" class="fan-hometown" rows="2" placeholder="Enter your hometown..." oninput="saveFormData()"></textarea>
+    </div>
+
+    <!-- Redraw Wheel Order Header -->
+    <div class="header">REDRAW WHEEL ORDER</div>
+
+    <!-- Wrap the top table in a container, no background image -->
+    <div class="table-container">
+        <table>
+            <thead>
+                <tr>
+                    <th>Driver</th>
+                    <th>Qualifying Time (ss.sss)</th>
+                    <th>Spin Number</th>
+                </tr>
+            </thead>
+            <tbody id="drivers">
+                <!-- Added 8 rows for 8 drivers -->
+                <tr>
+                    <td><input type="text" placeholder="Driver 1" id="driver1" oninput="saveFormData(); updateGrid()"></td>
+                    <td><input type="text" placeholder="00.000" id="time1" oninput="formatTime(this); saveFormData(); updateGrid()"></td>
+                    <td><input type="text" id="spin1" oninput="restrictSpin(this); saveFormData(); updateGrid()"></td>
+                </tr>
+                <tr>
+                    <td><input type="text" placeholder="Driver 2" id="driver2" oninput="saveFormData(); updateGrid()"></td>
+                    <td><input type="text" placeholder="00.000" id="time2" oninput="formatTime(this); saveFormData(); updateGrid()"></td>
+                    <td><input type="text" id="spin2" oninput="restrictSpin(this); saveFormData(); updateGrid()"></td>
+                </tr>
+                <tr>
+                    <td><input type="text" placeholder="Driver 3" id="driver3" oninput="saveFormData(); updateGrid()"></td>
+                    <td><input type="text" placeholder="00.000" id="time3" oninput="formatTime(this); saveFormData(); updateGrid()"></td>
+                    <td><input type="text" id="spin3" oninput="restrictSpin(this); saveFormData(); updateGrid()"></td>
+                </tr>
+                <tr>
+                    <td><input type="text" placeholder="Driver 4" id="driver4" oninput="saveFormData(); updateGrid()"></td>
+                    <td><input type="text" placeholder="00.000" id="time4" oninput="formatTime(this); saveFormData(); updateGrid()"></td>
+                    <td><input type="text" id="spin4" oninput="restrictSpin(this); saveFormData(); updateGrid()"></td>
+                </tr>
+                <tr>
+                    <td><input type="text" placeholder="Driver 5" id="driver5" oninput="saveFormData(); updateGrid()"></td>
+                    <td><input type="text" placeholder="00.000" id="time5" oninput="formatTime(this); saveFormData(); updateGrid()"></td>
+                    <td><input type="text" id="spin5" oninput="restrictSpin(this); saveFormData(); updateGrid()"></td>
+                </tr>
+                <tr>
+                    <td><input type="text" placeholder="Driver 6" id="driver6" oninput="saveFormData(); updateGrid()"></td>
+                    <td><input type="text" placeholder="00.000" id="time6" oninput="formatTime(this); saveFormData(); updateGrid()"></td>
+                    <td><input type="text" id="spin6" oninput="restrictSpin(this); saveFormData(); updateGrid()"></td>
+                </tr>
+                <tr>
+                    <td><input type="text" placeholder="Driver 7" id="driver7" oninput="saveFormData(); updateGrid()"></td>
+                    <td><input type="text" placeholder="00.000" id="time7" oninput="formatTime(this); saveFormData(); updateGrid()"></td>
+                    <td><input type="text" id="spin7" oninput="restrictSpin(this); saveFormData(); updateGrid()"></td>
+                </tr>
+                <tr>
+                    <td><input type="text" placeholder="Driver 8" id="driver8" oninput="saveFormData(); updateGrid()"></td>
+                    <td><input type="text" placeholder="00.000" id="time8" oninput="formatTime(this); saveFormData(); updateGrid()"></td>
+                    <td><input type="text" id="spin8" oninput="restrictSpin(this); saveFormData(); updateGrid()"></td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
 
     <button onclick="resetForm()">Reset</button>
 
@@ -82,15 +242,12 @@
                 spin7: document.getElementById('spin7').value,
                 spin8: document.getElementById('spin8').value,
             };
-            console.log('Saving data:', data); // Debugging line
             localStorage.setItem('formData', JSON.stringify(data));
-            updateGrid(); // Update the table after saving
         }
 
         // Load form data from localStorage
         function loadFormData() {
             const savedData = JSON.parse(localStorage.getItem('formData'));
-            console.log('Loaded data:', savedData); // Debugging line
             if (savedData) {
                 document.getElementById('fanQuestion').value = savedData.fanQuestion || '';
                 document.getElementById('fanName').value = savedData.fanName || '';
@@ -134,14 +291,11 @@
                     drivers.push({ driver, time, spin });
                 }
             }
-            console.log('Drivers:', drivers); // Debugging line
-
             // Sort by spin number
             drivers.sort((a, b) => a.spin - b.spin);
-
             // Populate the table
             const tableBody = document.getElementById("startingOrder");
-            tableBody.innerHTML = ''; // Clear existing rows
+            tableBody.innerHTML = '';
             drivers.forEach((driver, index) => {
                 const row = document.createElement("tr");
                 const rowNumber = document.createElement("td");
@@ -170,9 +324,6 @@
             loadFormData(); // Reload empty data
             document.getElementById('startingOrder').innerHTML = ''; // Clear table
         }
-
-        // Initialize
-        document.addEventListener('DOMContentLoaded', loadFormData);
     </script>
 </body>
 </html>
