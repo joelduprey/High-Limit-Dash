@@ -89,6 +89,23 @@
             justify-content: center;
             align-items: center;
         }
+        /* Reset button styling */
+        .reset-button {
+            margin: 10px auto;
+            padding: 10px 20px;
+            font-size: 4vw; /* Responsive font size */
+            font-family: 'Oswald', sans-serif;
+            background-color: #FFC107; /* Yellow background */
+            color: black; /* Black text */
+            border: 2px solid #FFC107; /* Yellow border */
+            cursor: pointer;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+        .reset-button:hover {
+            background-color: #1E88E5; /* Blue on hover */
+            color: white;
+        }
         /* Media query for smaller screens */
         @media (max-width: 480px) {
             table {
@@ -103,6 +120,10 @@
             }
             .table-container {
                 min-height: auto; /* Adjust for smaller screens */
+            }
+            .reset-button {
+                font-size: 5vw;
+                padding: 8px 16px;
             }
         }
     </style>
@@ -182,6 +203,9 @@
             <!-- This will be dynamically updated with JavaScript -->
         </tbody>
     </table>
+
+    <!-- Reset Button -->
+    <button class="reset-button" onclick="resetForm()">Reset All</button>
 
     <script>
         // Helper function to load data from localStorage if available
@@ -267,6 +291,19 @@
 
                 tableBody.appendChild(row);
             });
+        }
+
+        // Reset all inputs and localStorage
+        function resetForm() {
+            for (let i = 1; i <= 8; i++) {
+                document.getElementById('driver' + i).value = '';
+                document.getElementById('time' + i).value = '';
+                document.getElementById('spin' + i).value = '';
+                localStorage.removeItem('driver' + i);
+                localStorage.removeItem('time' + i);
+                localStorage.removeItem('spin' + i);
+            }
+            updateGrid();
         }
     </script>
 </body>
