@@ -56,7 +56,6 @@
         }
         textarea {
             resize: none; /* Prevent resizing */
-            height: 60px; /* Fixed height for 3 lines */
         }
         .highlight {
             background-color: #FFC107; /* Yellow highlight */
@@ -127,9 +126,10 @@
         }
         .fan-info-input, .fan-info-textarea {
             width: 100%;
-            max-width: 400px;
+            max-width: 600px; /* Larger width */
             padding: 8px;
             font-size: 4vw; /* Responsive font size */
+            line-height: 1.2em; /* Consistent line height */
             text-align: center;
             background-color: #000000;
             color: white;
@@ -138,20 +138,9 @@
             box-sizing: border-box;
         }
         .fan-info-textarea {
-    width: 100%;
-    max-width: 400px;
-    padding: 8px;
-    font-size: 4vw; /* Responsive font size */
-    line-height: 1.2em; /* Consistent line height for 3 lines */
-    height: 5em; /* 3 lines * 1.2em line-height */
-    text-align: center;
-    background-color: #000000;
-    color: white;
-    border: 1px solid #FFC107;
-    font-family: 'Oswald', sans-serif;
-    box-sizing: border-box;
-    resize: none;
-}
+            min-height: 5em; /* Larger height */
+            resize: none;
+        }
         /* Media query for smaller screens */
         @media (max-width: 480px) {
             table {
@@ -171,7 +160,15 @@
                 font-size: 5vw;
                 padding: 8px 16px;
             }
-            .fan-info-input, .fan-info-textarea, .fan-info-label {
+            .fan-info-input, .fan-info-textarea {
+                font-size: 5vw;
+            }
+            .fan-info-textarea {
+                line-height: 1.2em;
+                min-height: 5em; /* Maintain taller box */
+                max-width: 100%; /* Full width on small screens */
+            }
+            .fan-info-label {
                 font-size: 5vw;
             }
         }
@@ -183,14 +180,12 @@
     <div class="fan-info-container">
         <div>
             <label for="fanQuestion" class="fan-info-label">Fan Question of the Night</label>
-            <textarea id="fanQuestion" class="fan-info-textarea" placeholder="Enter fan question" rows="3" oninput="saveFormData()"></textarea>
+            <textarea id="fanQuestion" class="fan-info-textarea" placeholder="Enter fan question" rows="3" oninput="saveFormData(); adjustTextareaHeight(this)"></textarea>
         </div>
         <div>
-            <label for="fanName" class="fan-info-label">Fan’s Name</label>
             <input type="text" id="fanName" class="fan-info-input" placeholder="Enter fan’s name" oninput="saveFormData()">
         </div>
         <div>
-            <label for="fanHometown" class="fan-info-label">Fan’s Hometown</label>
             <input type="text" id="fanHometown" class="fan-info-input" placeholder="Enter fan’s hometown" oninput="saveFormData()">
         </div>
     </div>
@@ -282,6 +277,9 @@
             if (fanName) document.getElementById('fanName').value = fanName;
             if (fanHometown) document.getElementById('fanHometown').value = fanHometown;
 
+            // Adjust textarea height after loading fan question
+            adjustTextareaHeight(document.getElementById('fanQuestion'));
+
             // Load driver data
             for (let i = 1; i <= 8; i++) {
                 let driver = localStorage.getItem('driver' + i);
@@ -307,6 +305,12 @@
                 localStorage.setItem('time' + i, document.getElementById('time' + i).value);
                 localStorage.setItem('spin' + i, document.getElementById('spin' + i).value);
             }
+        }
+
+        // Adjust textarea height based on content
+        function adjustTextareaHeight(textarea) {
+            textarea.style.height = 'auto'; // Reset height to measure scrollHeight
+            textarea.style.height = `${Math.max(textarea.scrollHeight, 5 * parseFloat(getComputedStyle(textarea).fontSize) * 1.2)}px`; // Set to scrollHeight or min 5 lines
         }
 
         // Format time as mm.ss.sss
