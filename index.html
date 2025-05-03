@@ -8,9 +8,9 @@
     <meta name="apple-mobile-web-app-capable" content="yes">
     <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
     <meta name="apple-mobile-web-app-title" content="High Limit Dash">
-    <link rel="apple-touch-icon" href="/apple-touch-icon.png">
-    <link rel="icon" href="/icon.png">
-    <link rel="manifest" href="/manifest.json">
+    <link rel="apple-touch-icon" href="/High-Limit-Dash/apple-touch-icon.png">
+    <link rel="icon" href="/High-Limit-Dash/icon.png">
+    <link rel="manifest" href="/High-Limit-Dash/manifest.json">
     <title>High Limit Dash Starting Order</title>
     <style>
         @import url('https://fonts.googleapis.com/css2?family=Oswald:wght@600&display=swap'); /* Racing-style font */
@@ -275,17 +275,49 @@
     <button class="reset-button" onclick="resetForm()">Reset All</button>
 
     <script>
-        // Register service worker for offline support
+        // Debug PWA installability
+        window.addEventListener('load', () => {
+            // Check if served over HTTPS
+            console.log('Is HTTPS:', window.location.protocol === 'https:');
+            // Check manifest
+            fetch('/High-Limit-Dash/manifest.json')
+                .then(response => {
+                    console.log('Manifest fetch:', response.ok ? 'Success' : 'Failed', response.status);
+                    return response.json();
+                })
+                .then(data => console.log('Manifest content:', data))
+                .catch(error => console.error('Manifest error:', error));
+            // Check if install prompt is available
+            window.addEventListener('beforeinstallprompt', (e) => {
+                console.log('Install prompt available');
+                e.preventDefault(); // Prevent default prompt for debugging
+            });
+            window.addEventListener('appinstalled', () => {
+                console.log('PWA was installed');
+            });
+        });
+
+        // Register service worker with enhanced error handling
         if ('serviceWorker' in navigator) {
             window.addEventListener('load', () => {
-                navigator.serviceWorker.register('/service-worker.js')
+                navigator.serviceWorker.register('/High-Limit-Dash/service-worker.js')
                     .then(registration => {
                         console.log('Service Worker registered with scope:', registration.scope);
+                        if (navigator.serviceWorker.controller) {
+                            console.log('Service Worker is controlling this page');
+                        } else {
+                            console.log('Service Worker not yet controlling; reload may be needed');
+                        }
                     })
                     .catch(error => {
                         console.error('Service Worker registration failed:', error);
+                        fetch('/High-Limit-Dash/service-worker.js')
+                            .then(response => console.log('Service Worker fetch:', response.ok ? 'Success' : `Failed with status ${response.status}`))
+                            .catch(fetchError => console.error('Service Worker fetch error:', fetchError));
                     });
             });
+        } else {
+            console.log('Service Worker not supported in this browser');
         }
 
         // Helper function to load data from localStorage if available
@@ -384,7 +416,7 @@
                 row.appendChild(driverCell);
 
                 let timeCell = document.createElement('td');
-                timeCell.textContent = driver.time; // Fixed missing semicolon
+                timeCell.textContent = driver.time;
                 row.appendChild(timeCell);
 
                 let spinCell = document.createElement('td');
