@@ -138,9 +138,20 @@
             box-sizing: border-box;
         }
         .fan-info-textarea {
-            height: 60px; /* Fixed height for 3 lines */
-            resize: none;
-        }
+    width: 100%;
+    max-width: 400px;
+    padding: 8px;
+    font-size: 4vw; /* Responsive font size */
+    line-height: 1.2em; /* Consistent line height for 3 lines */
+    height: 3.6em; /* 3 lines * 1.2em line-height */
+    text-align: center;
+    background-color: #000000;
+    color: white;
+    border: 1px solid #FFC107;
+    font-family: 'Oswald', sans-serif;
+    box-sizing: border-box;
+    resize: none;
+}
         /* Media query for smaller screens */
         @media (max-width: 480px) {
             table {
