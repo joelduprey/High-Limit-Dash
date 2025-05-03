@@ -127,42 +127,42 @@
                 <tr>
                     <td><input type="text" placeholder="Driver 1" id="driver1" oninput="saveFormData(); updateGrid()"></td>
                     <td><input type="text" placeholder="00.000" id="time1" oninput="formatTime(this); saveFormData(); updateGrid()"></td>
-                    <td><input type="text" min="0" max="36" id="spin1" oninput="restrictSpin(this); saveFormData(); updateGrid()"></td>
+                    <td><input type="text" min="00" max="36" id="spin1" oninput="restrictSpin(this); saveFormData(); updateGrid()"></td>
                 </tr>
                 <tr>
                     <td><input type="text" placeholder="Driver 2" id="driver2" oninput="saveFormData(); updateGrid()"></td>
                     <td><input type="text" placeholder="00.000" id="time2" oninput="formatTime(this); saveFormData(); updateGrid()"></td>
-                    <td><input type="text" min="0" max="36" id="spin2" oninput="restrictSpin(this); saveFormData(); updateGrid()"></td>
+                    <td><input type="text" min="00" max="36" id="spin2" oninput="restrictSpin(this); saveFormData(); updateGrid()"></td>
                 </tr>
                 <tr>
                     <td><input type="text" placeholder="Driver 3" id="driver3" oninput="saveFormData(); updateGrid()"></td>
                     <td><input type="text" placeholder="00.000" id="time3" oninput="formatTime(this); saveFormData(); updateGrid()"></td>
-                    <td><input type="text" min="0" max="36" id="spin3" oninput="restrictSpin(this); saveFormData(); updateGrid()"></td>
+                    <td><input type="text" min="00" max="36" id="spin3" oninput="restrictSpin(this); saveFormData(); updateGrid()"></td>
                 </tr>
                 <tr>
                     <td><input type="text" placeholder="Driver 4" id="driver4" oninput="saveFormData(); updateGrid()"></td>
                     <td><input type="text" placeholder="00.000" id="time4" oninput="formatTime(this); saveFormData(); updateGrid()"></td>
-                    <td><input type="text" min="0" max="36" id="spin4" oninput="restrictSpin(this); saveFormData(); updateGrid()"></td>
+                    <td><input type="text" min="00" max="36" id="spin4" oninput="restrictSpin(this); saveFormData(); updateGrid()"></td>
                 </tr>
                 <tr>
                     <td><input type="text" placeholder="Driver 5" id="driver5" oninput="saveFormData(); updateGrid()"></td>
                     <td><input type="text" placeholder="00.000" id="time5" oninput="formatTime(this); saveFormData(); updateGrid()"></td>
-                    <td><input type="text" min="0" max="36" id="spin5" oninput="restrictSpin(this); saveFormData(); updateGrid()"></td>
+                    <td><input type="text" min="00" max="36" id="spin5" oninput="restrictSpin(this); saveFormData(); updateGrid()"></td>
                 </tr>
                 <tr>
                     <td><input type="text" placeholder="Driver 6" id="driver6" oninput="saveFormData(); updateGrid()"></td>
                     <td><input type="text" placeholder="00.000" id="time6" oninput="formatTime(this); saveFormData(); updateGrid()"></td>
-                    <td><input type="text" min="0" max="36" id="spin6" oninput="restrictSpin(this); saveFormData(); updateGrid()"></td>
+                    <td><input type="text" min="00" max="36" id="spin6" oninput="restrictSpin(this); saveFormData(); updateGrid()"></td>
                 </tr>
                 <tr>
                     <td><input type="text" placeholder="Driver 7" id="driver7" oninput="saveFormData(); updateGrid()"></td>
                     <td><input type="text" placeholder="00.000" id="time7" oninput="formatTime(this); saveFormData(); updateGrid()"></td>
-                    <td><input type="text" min="0" max="36" id="spin7" oninput="restrictSpin(this); saveFormData(); updateGrid()"></td>
+                    <td><input type="text" min="00" max="36" id="spin7" oninput="restrictSpin(this); saveFormData(); updateGrid()"></td>
                 </tr>
                 <tr>
                     <td><input type="text" placeholder="Driver 8" id="driver8" oninput="saveFormData(); updateGrid()"></td>
                     <td><input type="text" placeholder="00.000" id="time8" oninput="formatTime(this); saveFormData(); updateGrid()"></td>
-                    <td><input type="text" min="0" max="36" id="spin8" oninput="restrictSpin(this); saveFormData(); updateGrid()"></td>
+                    <td><input type="text" min="00" max="36" id="spin8" oninput="restrictSpin(this); saveFormData(); updateGrid()"></td>
                 </tr>
             </tbody>
         </table>
@@ -216,12 +216,12 @@
             input.value = value;
         }
 
-        // Restrict spin input to be between 0 and 36
+        // Restrict spin input to be between 00 and 36 and format as two digits
         function restrictSpin(input) {
             let value = parseInt(input.value);
             if (value < 0) value = 0;
             if (value > 36) value = 36;
-            input.value = value.toString();
+            input.value = value < 10 ? '0' + value : value.toString();
         }
 
         // Update the starting order table based on inputs
