@@ -112,13 +112,19 @@ function updateStartingOrder() {
     // Sort by qualifying time
     drivers.sort((a, b) => a.time - b.time);
 
+    // Format the spin number to always display two digits
+    function formatSpinNumber(spin) {
+        return spin < 10 ? '0' + spin : spin;
+    }
+
     // Populate the starting order table
     for (let i = 0; i < drivers.length; i++) {
         let driver = drivers[i];
         let rowNum = Math.floor(i / 2) + 1;
         let pos = i % 2 === 0 ? 'Inside' : 'Outside';
 
-        document.getElementById('row' + rowNum + pos).innerHTML = driver.name + " (" + driver.spin + ")";
+        // Display driver with the formatted spin number
+        document.getElementById('row' + rowNum + pos).innerHTML = driver.name + " (" + formatSpinNumber(driver.spin) + ")";
     }
 }
 </script>
