@@ -235,6 +235,7 @@
                 }
             }
 
+            // Sort by spin number first, then by time
             drivers.sort((a, b) => {
                 if (a.spin === b.spin) {
                     return parseFloat(a.time) - parseFloat(b.time);
