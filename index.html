@@ -208,38 +208,121 @@
         </table>
     </div>
 
-    <div class="header">Starting Order</div>
-    <table id="startingOrder">
-        <thead>
-            <tr>
-                <th>#</th>
-                <th>Driver</th>
-                <th>Spin</th>
-            </tr>
-        </thead>
-        <tbody>
-            <!-- Starting order will be populated here dynamically -->
-        </tbody>
-    </table>
-
-    <!-- Reset Button -->
-    <div>
-        <button onclick="resetForm()" style="padding: 10px 20px; font-size: 3.5vw; background-color: #FF5722; color: white; border: none; border-radius: 5px;">Reset</button>
-    </div>
+    <button onclick="resetForm()">Reset</button>
 
     <script>
-        // Add JavaScript code here (such as loadFormData(), saveFormData(), etc.)
-        // Reset function to clear all input fields
+        // Save form data in localStorage
+        function saveFormData() {
+            const data = {
+                fanQuestion: document.getElementById('fanQuestion').value,
+                fanName: document.getElementById('fanName').value,
+                fanHometown: document.getElementById('fanHometown').value,
+                driver1: document.getElementById('driver1').value,
+                driver2: document.getElementById('driver2').value,
+                driver3: document.getElementById('driver3').value,
+                driver4: document.getElementById('driver4').value,
+                driver5: document.getElementById('driver5').value,
+                driver6: document.getElementById('driver6').value,
+                driver7: document.getElementById('driver7').value,
+                driver8: document.getElementById('driver8').value,
+                time1: document.getElementById('time1').value,
+                time2: document.getElementById('time2').value,
+                time3: document.getElementById('time3').value,
+                time4: document.getElementById('time4').value,
+                time5: document.getElementById('time5').value,
+                time6: document.getElementById('time6').value,
+                time7: document.getElementById('time7').value,
+                time8: document.getElementById('time8').value,
+                spin1: document.getElementById('spin1').value,
+                spin2: document.getElementById('spin2').value,
+                spin3: document.getElementById('spin3').value,
+                spin4: document.getElementById('spin4').value,
+                spin5: document.getElementById('spin5').value,
+                spin6: document.getElementById('spin6').value,
+                spin7: document.getElementById('spin7').value,
+                spin8: document.getElementById('spin8').value,
+            };
+            localStorage.setItem('formData', JSON.stringify(data));
+        }
+
+        // Load form data from localStorage
+        function loadFormData() {
+            const savedData = JSON.parse(localStorage.getItem('formData'));
+            if (savedData) {
+                document.getElementById('fanQuestion').value = savedData.fanQuestion || '';
+                document.getElementById('fanName').value = savedData.fanName || '';
+                document.getElementById('fanHometown').value = savedData.fanHometown || '';
+                document.getElementById('driver1').value = savedData.driver1 || '';
+                document.getElementById('driver2').value = savedData.driver2 || '';
+                document.getElementById('driver3').value = savedData.driver3 || '';
+                document.getElementById('driver4').value = savedData.driver4 || '';
+                document.getElementById('driver5').value = savedData.driver5 || '';
+                document.getElementById('driver6').value = savedData.driver6 || '';
+                document.getElementById('driver7').value = savedData.driver7 || '';
+                document.getElementById('driver8').value = savedData.driver8 || '';
+                document.getElementById('time1').value = savedData.time1 || '';
+                document.getElementById('time2').value = savedData.time2 || '';
+                document.getElementById('time3').value = savedData.time3 || '';
+                document.getElementById('time4').value = savedData.time4 || '';
+                document.getElementById('time5').value = savedData.time5 || '';
+                document.getElementById('time6').value = savedData.time6 || '';
+                document.getElementById('time7').value = savedData.time7 || '';
+                document.getElementById('time8').value = savedData.time8 || '';
+                document.getElementById('spin1').value = savedData.spin1 || '';
+                document.getElementById('spin2').value = savedData.spin2 || '';
+                document.getElementById('spin3').value = savedData.spin3 || '';
+                document.getElementById('spin4').value = savedData.spin4 || '';
+                document.getElementById('spin5').value = savedData.spin5 || '';
+                document.getElementById('spin6').value = savedData.spin6 || '';
+                document.getElementById('spin7').value = savedData.spin7 || '';
+                document.getElementById('spin8').value = savedData.spin8 || '';
+                updateGrid(); // Update grid after loading data
+            }
+        }
+
+        // Update the starting order table
+        function updateGrid() {
+            const drivers = [];
+            for (let i = 1; i <= 8; i++) {
+                const driver = document.getElementById(`driver${i}`).value;
+                const time = document.getElementById(`time${i}`).value;
+                const spin = document.getElementById(`spin${i}`).value;
+                if (driver && time && spin) {
+                    drivers.push({ driver, time, spin });
+                }
+            }
+            // Sort by spin number
+            drivers.sort((a, b) => a.spin - b.spin);
+            // Populate the table
+            const tableBody = document.getElementById("startingOrder");
+            tableBody.innerHTML = '';
+            drivers.forEach((driver, index) => {
+                const row = document.createElement("tr");
+                const rowNumber = document.createElement("td");
+                rowNumber.textContent = index + 1; // Row number
+                row.appendChild(rowNumber);
+
+                const driverName = document.createElement("td");
+                driverName.textContent = driver.driver;
+                row.appendChild(driverName);
+
+                const driverTime = document.createElement("td");
+                driverTime.textContent = driver.time;
+                row.appendChild(driverTime);
+
+                const driverSpin = document.createElement("td");
+                driverSpin.textContent = driver.spin;
+                row.appendChild(driverSpin);
+
+                tableBody.appendChild(row);
+            });
+        }
+
+        // Reset form data and table
         function resetForm() {
-            // Clear all text inputs
-            document.querySelectorAll('input[type="text"]').forEach(input => input.value = '');
-
-            // Clear all textareas
-            document.querySelectorAll('textarea').forEach(textarea => textarea.value = '');
-
-            // Optionally, reset the starting order table as well
-            const startingOrderTable = document.getElementById("startingOrder").getElementsByTagName("tbody")[0];
-            startingOrderTable.innerHTML = ''; // Clear all rows in the table
+            localStorage.removeItem('formData'); // Remove saved data
+            loadFormData(); // Reload empty data
+            document.getElementById('startingOrder').innerHTML = ''; // Clear table
         }
     </script>
 </body>
