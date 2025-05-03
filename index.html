@@ -172,10 +172,9 @@
     <table id="startingOrder">
         <thead>
             <tr>
-                <th>Pos</th>
-                <th>Driver</th>
-                <th>Qualifying Time</th>
-                <th>Spin</th>
+                <th>Row</th>
+                <th>Inside</th>
+                <th>Outside</th>
             </tr>
         </thead>
         <tbody id="startingOrderBody">
@@ -195,7 +194,6 @@
                 if (time) document.getElementById('time' + i).value = time;
                 if (spin) document.getElementById('spin' + i).value = spin;
             }
-            updateGrid();
         }
 
         // Save form data to localStorage
@@ -247,26 +245,24 @@
             let tableBody = document.getElementById('startingOrderBody');
             tableBody.innerHTML = '';
 
-            drivers.forEach((driver, index) => {
-                let row = document.createElement('tr');
-                let posCell = document.createElement('td');
-                posCell.textContent = index + 1;
-                row.appendChild(posCell);
+            // Insert into rows with inside and outside positions
+            for (let row = 0; row < drivers.length; row += 2) {
+                let tr = document.createElement('tr');
 
-                let driverCell = document.createElement('td');
-                driverCell.textContent = driver.driver;
-                row.appendChild(driverCell);
+                let rowCell = document.createElement('td');
+                rowCell.textContent = Math.floor(row / 2) + 1; // Row number
+                tr.appendChild(rowCell);
 
-                let timeCell = document.createElement('td');
-                timeCell.textContent = driver.time;
-                row.appendChild(timeCell);
+                let insideCell = document.createElement('td');
+                insideCell.textContent = drivers[row]?.driver || ''; // Inside position
+                tr.appendChild(insideCell);
 
-                let spinCell = document.createElement('td');
-                spinCell.textContent = driver.spin.toString().padStart(2, '0'); // Ensure two digits for spin
-                row.appendChild(spinCell);
+                let outsideCell = document.createElement('td');
+                outsideCell.textContent = drivers[row + 1]?.driver || ''; // Outside position
+                tr.appendChild(outsideCell);
 
-                tableBody.appendChild(row);
-            });
+                tableBody.appendChild(tr);
+            }
         }
     </script>
 </body>
