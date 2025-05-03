@@ -1,233 +1,202 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <link rel="manifest" href="manifest.json">
-    <link rel="apple-touch-icon" href="icon.png">
-    <meta name="theme-color" content="#ff6600">
-    <link rel="icon" href="favicon.ico" type="image/x-icon">
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>High Limit Dash Starting Order</title>
     <style>
-        @import url('https://fonts.googleapis.com/css2?family=Oswald:wght@600&display=swap');
-
         body {
-            font-family: 'Oswald', sans-serif;
+            font-family: 'Arial', sans-serif;
+            margin: 20px;
+            background-color: #111;
+            color: #fff;
+        }
+        h1 {
             text-align: center;
-            margin: 10px;
-            background-color: #1a1a1a;
-            color: white;
+            color: #ffcc00;
+        }
+        .driver-input {
+            margin-bottom: 15px;
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px;
+        }
+        .driver-input label {
+            flex: 1 0 100%;
+            font-weight: bold;
+            margin-bottom: 4px;
+        }
+        .driver-input input {
+            flex: 1 0 calc(33.33% - 10px);
+            padding: 8px;
             font-size: 16px;
+            border: none;
+            border-radius: 5px;
+        }
+        .driver-container {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: space-between;
+        }
+        .driver-box {
+            flex: 1 0 48%;
+            background-color: #222;
+            padding: 10px;
+            margin: 10px 0;
+            border-radius: 8px;
         }
         table {
             width: 100%;
-            margin: 5px auto;
             border-collapse: collapse;
-            background-color: #000;
-            color: white;
-            border: 2px solid #FFC107;
-            font-size: 3.5vw;
+            margin-top: 25px;
         }
         th, td {
-            border: 2px solid #FFC107;
-            padding: 8px;
-            text-align: center;
-            background-color: #000;
-            color: white;
-        }
-        th:nth-child(1), td:nth-child(1) { width: 50%; }
-        th:nth-child(2), td:nth-child(2) { width: 30%; }
-        th:nth-child(3), td:nth-child(3) { width: 20%; }
-        input, textarea {
-            width: 90%;
-            padding: 8px;
-            font-size: 3.5vw;
-            text-align: center;
-            background-color: #000;
-            color: white;
-            border: 1px solid #FFC107;
-            box-sizing: border-box;
-        }
-        .highlight {
-            background-color: #FFC107;
-            color: black;
-            font-weight: bold;
-        }
-        .header {
-            font-size: 6vw;
-            font-weight: bold;
-            color: #FFC107;
-            text-transform: uppercase;
-            margin: 5px 0;
-            letter-spacing: 1px;
-        }
-        #startingOrder tr td {
-            background-color: #1E88E5;
-            color: white;
-            font-size: 3.5vw;
-        }
-        #startingOrder tr td:first-child {
-            background-color: #FFC107;
-            color: black;
-            font-weight: bold;
-        }
-        #startingOrder th {
-            background-color: #1E88E5;
-            color: #FFC107;
-        }
-        .table-container {
-            position: relative;
-            padding: 5px;
-            display: flex;
-            flex-direction: column;
-            gap: 20px;
-            justify-content: center;
-            align-items: center;
-        }
-        .fan-question {
-            margin: 20px 0;
             padding: 10px;
-            border: 2px solid #FFC107;
-            background-color: #000;
+            text-align: center;
         }
-        .fan-question textarea {
-            height: 100px;
+        th {
+            background-color: #444;
         }
-        .fan-info {
-            display: flex;
-            flex-direction: column;
-            gap: 10px;
-            margin-top: 10px;
+        td {
+            background-color: #222;
         }
-        @media (max-width: 480px) {
-            table { font-size: 4vw; }
-            input, textarea { font-size: 4vw; padding: 6px; }
-            .header { font-size: 7vw; }
+        .question-box {
+            margin-top: 30px;
+        }
+        .question-box label {
+            font-weight: bold;
+        }
+        .question-box input {
+            width: 100%;
+            padding: 10px;
+            margin-top: 8px;
+            font-size: 16px;
+            border-radius: 5px;
+            border: none;
+        }
+        @media screen and (max-width: 768px) {
+            .driver-box {
+                flex: 1 0 100%;
+            }
+            .driver-input input {
+                flex: 1 0 100%;
+            }
         }
     </style>
 </head>
-<body onload="loadFormData()">
-    <div class="header">REDRAW WHEEL ORDER</div>
+<body>
+    <h1>High Limit Dash Starting Order</h1>
 
-    <div class="table-container">
-        <table>
-            <thead>
-                <tr>
-                    <th>Driver</th>
-                    <th>Qualifying Time (ss.sss)</th>
-                    <th>Spin Number</th>
-                </tr>
-            </thead>
-            <tbody id="drivers">
-                <!-- 8 driver input rows -->
-                ${[...Array(8)].map((_, i) => `
-                <tr>
-                    <td><input type="text" placeholder="Driver ${i+1}" id="driver${i+1}" oninput="saveFormData(); updateGrid()"></td>
-                    <td><input type="text" placeholder="00.000" id="time${i+1}" oninput="formatTime(this); saveFormData(); updateGrid()"></td>
-                    <td><input type="text" min="0" max="36" id="spin${i+1}" oninput="restrictSpin(this); saveFormData(); updateGrid()"></td>
-                </tr>`).join('')}
-            </tbody>
-        </table>
+    <div class="driver-container">
+        <!-- Driver Inputs -->
+        <div class="driver-box">
+            <div class="driver-input">
+                <label for="driver1">Driver 1</label>
+                <input type="text" id="driver1" placeholder="Name">
+                <input type="text" id="qualify1" placeholder="Qualifying Time">
+                <input type="text" id="spin1" placeholder="Spin (00,0-9)" oninput="updateGrid()">
+            </div>
+            <div class="driver-input">
+                <label for="driver2">Driver 2</label>
+                <input type="text" id="driver2" placeholder="Name">
+                <input type="text" id="qualify2" placeholder="Qualifying Time">
+                <input type="text" id="spin2" placeholder="Spin (00,0-9)" oninput="updateGrid()">
+            </div>
+            <div class="driver-input">
+                <label for="driver3">Driver 3</label>
+                <input type="text" id="driver3" placeholder="Name">
+                <input type="text" id="qualify3" placeholder="Qualifying Time">
+                <input type="text" id="spin3" placeholder="Spin (00,0-9)" oninput="updateGrid()">
+            </div>
+            <div class="driver-input">
+                <label for="driver4">Driver 4</label>
+                <input type="text" id="driver4" placeholder="Name">
+                <input type="text" id="qualify4" placeholder="Qualifying Time">
+                <input type="text" id="spin4" placeholder="Spin (00,0-9)" oninput="updateGrid()">
+            </div>
+        </div>
 
-        <table id="startingOrder">
-            <thead>
-                <tr>
-                    <th>Start</th>
-                    <th>Driver</th>
-                    <th>Spin</th>
-                </tr>
-            </thead>
-            <tbody id="startingOrderBody">
-                <!-- dynamically filled -->
-            </tbody>
-        </table>
-    </div>
-
-    <div class="fan-question">
-        <div class="header">Fan Question of the Night</div>
-        <textarea id="fanQuestion" placeholder="Enter the fan's question here..." oninput="saveFormData()"></textarea>
-        <div class="fan-info">
-            <input type="text" id="fanName" placeholder="Fan's Name" oninput="saveFormData()">
-            <input type="text" id="fanHometown" placeholder="Fan's Hometown" oninput="saveFormData()">
+        <div class="driver-box">
+            <div class="driver-input">
+                <label for="driver5">Driver 5</label>
+                <input type="text" id="driver5" placeholder="Name">
+                <input type="text" id="qualify5" placeholder="Qualifying Time">
+                <input type="text" id="spin5" placeholder="Spin (00,0-9)" oninput="updateGrid()">
+            </div>
+            <div class="driver-input">
+                <label for="driver6">Driver 6</label>
+                <input type="text" id="driver6" placeholder="Name">
+                <input type="text" id="qualify6" placeholder="Qualifying Time">
+                <input type="text" id="spin6" placeholder="Spin (00,0-9)" oninput="updateGrid()">
+            </div>
+            <div class="driver-input">
+                <label for="driver7">Driver 7</label>
+                <input type="text" id="driver7" placeholder="Name">
+                <input type="text" id="qualify7" placeholder="Qualifying Time">
+                <input type="text" id="spin7" placeholder="Spin (00,0-9)" oninput="updateGrid()">
+            </div>
+            <div class="driver-input">
+                <label for="driver8">Driver 8</label>
+                <input type="text" id="driver8" placeholder="Name">
+                <input type="text" id="qualify8" placeholder="Qualifying Time">
+                <input type="text" id="spin8" placeholder="Spin (00,0-9)" oninput="updateGrid()">
+            </div>
         </div>
     </div>
 
+    <div class="question-box">
+        <label for="fanQuestion">Fan Question:</label>
+        <input type="text" id="fanQuestion" placeholder="Type the fan question here">
+    </div>
+
+    <table id="startingOrder">
+        <thead>
+            <tr>
+                <th>Row</th>
+                <th>Inside</th>
+                <th>Outside</th>
+            </tr>
+        </thead>
+        <tbody id="startingOrderBody">
+            <!-- Filled by JS -->
+        </tbody>
+    </table>
+
     <script>
-        function saveFormData() {
-            const data = {
-                drivers: [],
-                fanQuestion: document.getElementById('fanQuestion').value,
-                fanName: document.getElementById('fanName').value,
-                fanHometown: document.getElementById('fanHometown').value
-            };
-
-            for (let i = 1; i <= 8; i++) {
-                data.drivers.push({
-                    driver: document.getElementById('driver' + i).value,
-                    time: document.getElementById('time' + i).value,
-                    spin: document.getElementById('spin' + i).value
-                });
-            }
-
-            localStorage.setItem('formData', JSON.stringify(data));
-        }
-
-        function loadFormData() {
-            const data = JSON.parse(localStorage.getItem('formData'));
-            if (!data) return;
-
-            for (let i = 1; i <= 8; i++) {
-                document.getElementById('driver' + i).value = data.drivers[i - 1]?.driver || '';
-                document.getElementById('time' + i).value = data.drivers[i - 1]?.time || '';
-                document.getElementById('spin' + i).value = data.drivers[i - 1]?.spin || '';
-            }
-
-            document.getElementById('fanQuestion').value = data.fanQuestion || '';
-            document.getElementById('fanName').value = data.fanName || '';
-            document.getElementById('fanHometown').value = data.fanHometown || '';
-            updateGrid();
-        }
+        const validSpinValues = ["00", "0", "1", "2", "3", "4", "5", "6", "7", "8", "9"];
 
         function updateGrid() {
-            const drivers = [];
+            const data = [];
+
             for (let i = 1; i <= 8; i++) {
                 const name = document.getElementById('driver' + i).value.trim();
-                const spin = parseInt(document.getElementById('spin' + i).value);
-                if (name && !isNaN(spin)) {
-                    drivers.push({ name, spin });
+                const spin = document.getElementById('spin' + i).value.trim();
+
+                if (name && validSpinValues.includes(spin)) {
+                    const spinValue = spin === "00" ? -1 : parseInt(spin); // Treat "00" as best spin
+                    data.push({ name, spin, spinValue });
                 }
             }
 
-            drivers.sort((a, b) => a.spin - b.spin);
+            // Sort drivers by spinValue ascending
+            data.sort((a, b) => a.spinValue - b.spinValue);
 
             const tbody = document.getElementById('startingOrderBody');
             tbody.innerHTML = '';
-            drivers.forEach((driver, idx) => {
-                const row = document.createElement('tr');
-                row.innerHTML = `
-                    <td>${idx + 1}</td>
-                    <td>${driver.name}</td>
-                    <td>${driver.spin}</td>
+
+            for (let i = 0; i < data.length; i += 2) {
+                const rowNum = Math.floor(i / 2) + 1;
+                const insideDriver = data[i]?.name || '';
+                const outsideDriver = data[i + 1]?.name || '';
+
+                const tr = document.createElement('tr');
+                tr.innerHTML = `
+                    <td>${rowNum}</td>
+                    <td>${insideDriver}</td>
+                    <td>${outsideDriver}</td>
                 `;
-                tbody.appendChild(row);
-            });
-        }
-
-        function restrictSpin(input) {
-            let value = parseInt(input.value);
-            if (isNaN(value) || value < 0) value = '';
-            else if (value > 36) value = 36;
-            input.value = value;
-        }
-
-        function formatTime(input) {
-            let value = input.value.replace(/[^\d.]/g, '');
-            const match = value.match(/^(\d{1,2})(\d{0,3})$/);
-            if (match) {
-                value = match[1];
-                if (match[2]) value += '.' + match[2];
+                tbody.appendChild(tr);
             }
-            input.value = value;
         }
     </script>
 </body>
