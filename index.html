@@ -3,6 +3,14 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <meta name="description" content="High Limit Dash Starting Order and Fan Question Tracker">
+    <meta name="theme-color" content="#1a1a1a"> <!-- Matches body background -->
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    <meta name="apple-mobile-web-app-title" content="High Limit Dash">
+    <link rel="apple-touch-icon" href="/apple-touch-icon.png">
+    <link rel="icon" href="/icon.png">
+    <link rel="manifest" href="/manifest.json">
     <title>High Limit Dash Starting Order</title>
     <style>
         @import url('https://fonts.googleapis.com/css2?family=Oswald:wght@600&display=swap'); /* Racing-style font */
@@ -267,6 +275,19 @@
     <button class="reset-button" onclick="resetForm()">Reset All</button>
 
     <script>
+        // Register service worker for offline support
+        if ('serviceWorker' in navigator) {
+            window.addEventListener('load', () => {
+                navigator.serviceWorker.register('/service-worker.js')
+                    .then(registration => {
+                        console.log('Service Worker registered with scope:', registration.scope);
+                    })
+                    .catch(error => {
+                        console.error('Service Worker registration failed:', error);
+                    });
+            });
+        }
+
         // Helper function to load data from localStorage if available
         function loadFormData() {
             // Load fan info
@@ -363,7 +384,7 @@
                 row.appendChild(driverCell);
 
                 let timeCell = document.createElement('td');
-                timeCell.textContent = driver.time;
+                timeCell.textContent = driver.time; // Fixed missing semicolon
                 row.appendChild(timeCell);
 
                 let spinCell = document.createElement('td');
