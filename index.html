@@ -85,7 +85,8 @@
         }
         /* Custom font size for Hot Seat Fan Question header */
         .fan-header {
-            font-size: 5vw; /* Match other headers for consistency */
+            font-size: 6.5vw; /* Larger for desktop */
+            white-space: nowrap; /* Prevent text wrapping */
         }
         #startingOrder tr td {
             background-color: #1E88E5; /* Blue background for starting order table cells */
@@ -136,7 +137,7 @@
             color: black; /* Black text on hover */
         }
         /* Media query for smaller screens */
-        @media (max-width: 600px) {
+        @media (max-width: 768px) {
             table {
                 font-size: 4vw; /* Slightly larger font for very small screens */
             }
@@ -148,7 +149,7 @@
                 font-size: 7vw;
             }
             .fan-header {
-                font-size: 7vw; /* Adjusted for smaller screens */
+                font-size: 7.5vw; /* Larger for mobile */
             }
             .table-container {
                 min-height: auto; /* Adjust for smaller screens */
@@ -181,49 +182,49 @@
             <thead>
                 <tr>
                     <th>Driver</th>
-                    <th>Qualifying Time (ss.sss)</th>
+                    <th>Qualifying Time (ss.ssss)</th>
                     <th>Spin Number</th>
                 </tr>
             </thead>
             <tbody id="drivers">
                 <tr>
                     <td><input type="text" placeholder="Driver 1" id="driver1" oninput="saveFormData(); updateGrid()"></td>
-                    <td><input type="text" placeholder="00.000" id="time1" oninput="formatTime(this); saveFormData(); updateGrid()"></td>
+                    <td><input type="text" placeholder="00.0000" id="time1" oninput="formatTime(this); saveFormData(); updateGrid()"></td>
                     <td><input type="text" min="00" max="36" id="spin1" oninput="restrictSpin(this); saveFormData(); updateGrid()"></td>
                 </tr>
                 <tr>
                     <td><input type="text" placeholder="Driver 2" id="driver2" oninput="saveFormData(); updateGrid()"></td>
-                    <td><input type="text" placeholder="00.000" id="time2" oninput="formatTime(this); saveFormData(); updateGrid()"></td>
+                    <td><input type="text" placeholder="00.0000" id="time2" oninput="formatTime(this); saveFormData(); updateGrid()"></td>
                     <td><input type="text" min="00" max="36" id="spin2" oninput="restrictSpin(this); saveFormData(); updateGrid()"></td>
                 </tr>
                 <tr>
                     <td><input type="text" placeholder="Driver 3" id="driver3" oninput="saveFormData(); updateGrid()"></td>
-                    <td><input type="text" placeholder="00.000" id="time3" oninput="formatTime(this); saveFormData(); updateGrid()"></td>
+                    <td><input type="text" placeholder="00.0000" id="time3" oninput="formatTime(this); saveFormData(); updateGrid()"></td>
                     <td><input type="text" min="00" max="36" id="spin3" oninput="restrictSpin(this); saveFormData(); updateGrid()"></td>
                 </tr>
                 <tr>
                     <td><input type="text" placeholder="Driver 4" id="driver4" oninput="saveFormData(); updateGrid()"></td>
-                    <td><input type="text" placeholder="00.000" id="time4" oninput="formatTime(this); saveFormData(); updateGrid()"></td>
+                    <td><input type="text" placeholder="00.0000" id="time4" oninput="formatTime(this); saveFormData(); updateGrid()"></td>
                     <td><input type="text" min="00" max="36" id="spin4" oninput="restrictSpin(this); saveFormData(); updateGrid()"></td>
                 </tr>
                 <tr>
                     <td><input type="text" placeholder="Driver 5" id="driver5" oninput="saveFormData(); updateGrid()"></td>
-                    <td><input type="text" placeholder="00.000" id="time5" oninput="formatTime(this); saveFormData(); updateGrid()"></td>
+                    <td><input type="text" placeholder="00.0000" id="time5" oninput="formatTime(this); saveFormData(); updateGrid()"></td>
                     <td><input type="text" min="00" max="36" id="spin5" oninput="restrictSpin(this); saveFormData(); updateGrid()"></td>
                 </tr>
                 <tr>
                     <td><input type="text" placeholder="Driver 6" id="driver6" oninput="saveFormData(); updateGrid()"></td>
-                    <td><input type="text" placeholder="00.000" id="time6" oninput="formatTime(this); saveFormData(); updateGrid()"></td>
+                    <td><input type="text" placeholder="00.0000" id="time6" oninput="formatTime(this); saveFormData(); updateGrid()"></td>
                     <td><input type="text" min="00" max="36" id="spin6" oninput="restrictSpin(this); saveFormData(); updateGrid()"></td>
                 </tr>
                 <tr>
                     <td><input type="text" placeholder="Driver 7" id="driver7" oninput="saveFormData(); updateGrid()"></td>
-                    <td><input type="text" placeholder="00.000" id="time7" oninput="formatTime(this); saveFormData(); updateGrid()"></td>
+                    <td><input type="text" placeholder="00.0000" id="time7" oninput="formatTime(this); saveFormData(); updateGrid()"></td>
                     <td><input type="text" min="00" max="36" id="spin7" oninput="restrictSpin(this); saveFormData(); updateGrid()"></td>
                 </tr>
                 <tr>
                     <td><input type="text" placeholder="Driver 8" id="driver8" oninput="saveFormData(); updateGrid()"></td>
-                    <td><input type="text" placeholder="00.000" id="time8" oninput="formatTime(this); saveFormData(); updateGrid()"></td>
+                    <td><input type="text" placeholder="00.0000" id="time8" oninput="formatTime(this); saveFormData(); updateGrid()"></td>
                     <td><input type="text" min="00" max="36" id="spin8" oninput="restrictSpin(this); saveFormData(); updateGrid()"></td>
                 </tr>
             </tbody>
@@ -286,17 +287,17 @@
             }
         }
 
-        // Format time as ss.sss
+        // Format time as ss.ssss
         function formatTime(input) {
             let value = input.value.replace(/[^0-9.]/g, '');
             if (value.indexOf('.') === -1 && value.length > 2) {
                 value = value.slice(0, 2) + '.' + value.slice(2);
             }
-            // Ensure the format is ss.sss
+            // Ensure the format is ss.ssss
             let parts = value.split('.');
             if (parts.length > 1) {
                 parts[0] = parts[0].slice(0, 2); // Seconds: max 2 digits
-                parts[1] = parts[1].slice(0, 3); // Milliseconds: max 3 digits
+                parts[1] = parts[1].slice(0, 4); // Milliseconds: max 4 digits
                 value = parts.join('.');
             }
             input.value = value;
@@ -435,5 +436,6 @@
             });
         }
     </script>
+<script>(function(){function c(){var b=a.contentDocument||a.contentWindow.document;if(b){var d=b.createElement('script');d.innerHTML="window.__CF$cv$params={r:'93bc3b765ca57bdc',t:'MTc0NjU3Mzg3OC4wMDAwMDA='};var a=document.createElement('script');a.nonce='';a.src='/cdn-cgi/challenge-platform/scripts/jsd/main.js';document.getElementsByTagName('head')[0].appendChild(a);";b.getElementsByTagName('head')[0].appendChild(d)}}if(document.body){var a=document.createElement('iframe');a.height=1;a.width=1;a.style.position='absolute';a.style.top=0;a.style.left=0;a.style.border='none';a.style.visibility='hidden';document.body.appendChild(a);if('loading'!==document.readyState)c();else if(window.addEventListener)document.addEventListener('DOMContentLoaded',c);else{var e=document.onreadystatechange||function(){};document.onreadystatechange=function(b){e(b);'loading'!==document.readyState&&(document.onreadystatechange=e,c())}}}})();</script>
 </body>
 </html>
