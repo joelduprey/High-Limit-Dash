@@ -76,12 +76,16 @@
             font-weight: bold;
         }
         .header {
-            font-size: 6vw; /* Responsive font size for headers */
+            font-size: 6vw; /* Default font size for headers */
             font-weight: bold;
             color: #FFC107; /* Yellow headers */
             text-transform: uppercase;
             margin: 5px 0;
             letter-spacing: 1px;
+        }
+        /* Custom font size for Hot Seat Fan Question header */
+        .fan-header {
+            font-size: 5vw; /* Smaller font size for fan header (adjust as needed) */
         }
         #startingOrder tr td {
             background-color: #1E88E5; /* Blue background for starting order table cells */
@@ -143,6 +147,9 @@
             .header {
                 font-size: 7vw;
             }
+            .fan-header {
+                font-size: 6vw; /* Adjusted for smaller screens */
+            }
             .table-container {
                 min-height: auto; /* Adjust for smaller screens */
             }
@@ -156,7 +163,7 @@
 <body onload="loadFormData()">
 
     <!-- Fan Information Header -->
-    <div class="header">Hot Seat Fan Question of the Night</div>
+    <div class="header fan-header">Hot Seat Fan Question of the Night</div>
 
     <!-- Fan Input Fields -->
     <div class="fan-container">
