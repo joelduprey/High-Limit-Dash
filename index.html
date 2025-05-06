@@ -188,42 +188,42 @@
             </thead>
             <tbody id="drivers">
                 <tr>
-                    <td><input type="text" placeholder="Driver 1" id="driver1" oninput="saveFormData(); updateGrid()"></td>
+                    <td><input type="text" placeholder="Driver 1" id="driver1" oninput="capitalizeWords(this); saveFormData(); updateGrid()"></td>
                     <td><input type="text" placeholder="00.0000" id="time1" oninput="formatTime(this); saveFormData(); updateGrid()"></td>
                     <td><input type="text" min="00" max="36" id="spin1" oninput="restrictSpin(this); saveFormData(); updateGrid()"></td>
                 </tr>
                 <tr>
-                    <td><input type="text" placeholder="Driver 2" id="driver2" oninput="saveFormData(); updateGrid()"></td>
+                    <td><input type="text" placeholder="Driver 2" id="driver2" oninput="capitalizeWords(this); saveFormData(); updateGrid()"></td>
                     <td><input type="text" placeholder="00.0000" id="time2" oninput="formatTime(this); saveFormData(); updateGrid()"></td>
                     <td><input type="text" min="00" max="36" id="spin2" oninput="restrictSpin(this); saveFormData(); updateGrid()"></td>
                 </tr>
                 <tr>
-                    <td><input type="text" placeholder="Driver 3" id="driver3" oninput="saveFormData(); updateGrid()"></td>
+                    <td><input type="text" placeholder="Driver 3" id="driver3" oninput="capitalizeWords(this); saveFormData(); updateGrid()"></td>
                     <td><input type="text" placeholder="00.0000" id="time3" oninput="formatTime(this); saveFormData(); updateGrid()"></td>
                     <td><input type="text" min="00" max="36" id="spin3" oninput="restrictSpin(this); saveFormData(); updateGrid()"></td>
                 </tr>
                 <tr>
-                    <td><input type="text" placeholder="Driver 4" id="driver4" oninput="saveFormData(); updateGrid()"></td>
+                    <td><input type="text" placeholder="Driver 4" id="driver4" oninput="capitalizeWords(this); saveFormData(); updateGrid()"></td>
                     <td><input type="text" placeholder="00.0000" id="time4" oninput="formatTime(this); saveFormData(); updateGrid()"></td>
                     <td><input type="text" min="00" max="36" id="spin4" oninput="restrictSpin(this); saveFormData(); updateGrid()"></td>
                 </tr>
                 <tr>
-                    <td><input type="text" placeholder="Driver 5" id="driver5" oninput="saveFormData(); updateGrid()"></td>
+                    <td><input type="text" placeholder="Driver 5" id="driver5" oninput="capitalizeWords(this); saveFormData(); updateGrid()"></td>
                     <td><input type="text" placeholder="00.0000" id="time5" oninput="formatTime(this); saveFormData(); updateGrid()"></td>
                     <td><input type="text" min="00" max="36" id="spin5" oninput="restrictSpin(this); saveFormData(); updateGrid()"></td>
                 </tr>
                 <tr>
-                    <td><input type="text" placeholder="Driver 6" id="driver6" oninput="saveFormData(); updateGrid()"></td>
+                    <td><input type="text" placeholder="Driver 6" id="driver6" oninput="capitalizeWords(this); saveFormData(); updateGrid()"></td>
                     <td><input type="text" placeholder="00.0000" id="time6" oninput="formatTime(this); saveFormData(); updateGrid()"></td>
                     <td><input type="text" min="00" max="36" id="spin6" oninput="restrictSpin(this); saveFormData(); updateGrid()"></td>
                 </tr>
                 <tr>
-                    <td><input type="text" placeholder="Driver 7" id="driver7" oninput="saveFormData(); updateGrid()"></td>
+                    <td><input type="text" placeholder="Driver 7" id="driver7" oninput="capitalizeWords(this); saveFormData(); updateGrid()"></td>
                     <td><input type="text" placeholder="00.0000" id="time7" oninput="formatTime(this); saveFormData(); updateGrid()"></td>
                     <td><input type="text" min="00" max="36" id="spin7" oninput="restrictSpin(this); saveFormData(); updateGrid()"></td>
                 </tr>
                 <tr>
-                    <td><input type="text" placeholder="Driver 8" id="driver8" oninput="saveFormData(); updateGrid()"></td>
+                    <td><input type="text" placeholder="Driver 8" id="driver8" oninput="capitalizeWords(this); saveFormData(); updateGrid()"></td>
                     <td><input type="text" placeholder="00.0000" id="time8" oninput="formatTime(this); saveFormData(); updateGrid()"></td>
                     <td><input type="text" min="00" max="36" id="spin8" oninput="restrictSpin(this); saveFormData(); updateGrid()"></td>
                 </tr>
@@ -249,6 +249,18 @@
     <button id="resetButton" onclick="resetForm()">Reset All Data</button>
 
     <script>
+        // Capitalize the first letter of each word in the input
+        function capitalizeWords(input) {
+            let value = input.value;
+            if (value) {
+                input.value = value
+                    .toLowerCase()
+                    .split(' ')
+                    .map(word => word.charAt(0).toUpperCase() + word.slice(1))
+                    .join(' ');
+            }
+        }
+
         // Helper function to load data from localStorage if available
         function loadFormData() {
             // Load fan information
