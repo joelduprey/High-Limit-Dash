@@ -45,7 +45,7 @@
         th:nth-child(3), td:nth-child(3) {
             width: 20%; /* Spin Number column */
         }
-        input {
+        input, textarea {
             width: 90%; /* Slightly less than full width for padding */
             padding: 8px;
             font-size: 3.5vw; /* Responsive font size for inputs */
@@ -54,6 +54,11 @@
             color: white; /* White text */
             border: 1px solid #FFC107; /* Yellow border */
             box-sizing: border-box; /* Ensure padding doesn’t affect width */
+            font-family: 'Oswald', sans-serif;
+        }
+        textarea {
+            resize: none; /* Prevent resizing */
+            vertical-align: middle;
         }
         .highlight {
             background-color: #FFC107; /* Yellow highlight */
@@ -91,6 +96,14 @@
             justify-content: center;
             align-items: center;
         }
+        /* Container for fan inputs */
+        .fan-container {
+            padding: 10px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 10px;
+        }
         /* Reset button styling */
         #resetButton {
             margin: 20px auto;
@@ -113,7 +126,7 @@
             table {
                 font-size: 4vw; /* Slightly larger font for very small screens */
             }
-            input {
+            input, textarea {
                 font-size: 4vw;
                 padding: 6px;
             }
@@ -131,6 +144,16 @@
     </style>
 </head>
 <body onload="loadFormData()">
+
+    <!-- Fan Information Header -->
+    <div class="header">Fan Information</div>
+
+    <!-- Fan Input Fields -->
+    <div class="fan-container">
+        <textarea id="fanQuestion" rows="3" placeholder="Fan Question of the Night" oninput="saveFormData()"></textarea>
+        <input type="text" id="fanName" placeholder="Fans Name" oninput="saveFormData()">
+        <input type="text" id="fanHometown" placeholder="Fans Hometown" oninput="saveFormData()">
+    </div>
 
     <!-- Redraw Wheel Order Header -->
     <div class="header">REDRAW WHEEL ORDER</div>
@@ -211,6 +234,15 @@
     <script>
         // Helper function to load data from localStorage if available
         function loadFormData() {
+            // Load fan information
+            let fanQuestion = localStorage.getItem('fanQuestion');
+            let fanName = localStorage.getItem('fanName');
+            let fanHometown = localStorage.getItem('fanHometown');
+            if (fanQuestion) document.getElementById('fanQuestion').value = fanQuestion;
+            if (fanName) document.getElementById('fanName').value = fanName;
+            if (fanHometown) document.getElementById('fanHometown').value = fanHometown;
+
+            // Load driver data
             for (let i = 1; i <= 8; i++) {
                 let driver = localStorage.getItem('driver' + i);
                 let time = localStorage.getItem('time' + i);
@@ -225,6 +257,12 @@
 
         // Save form data to localStorage
         function saveFormData() {
+            // Save fan information
+            localStorage.setItem('fanQuestion', document.getElementById('fanQuestion').value);
+            localStorage.setItem('fanName', document.getElementById('fanName').value);
+            localStorage.setItem('fanHometown', document.getElementById('fanHometown').value);
+
+            // Save driver data
             for (let i = 1; i <= 8; i++) {
                 localStorage.setItem('driver' + i, document.getElementById('driver' + i).value);
                 localStorage.setItem('time' + i, document.getElementById('time' + i).value);
@@ -319,19 +357,27 @@
         // Reset all form data with confirmation
         function resetForm() {
             if (confirm("Are you sure you want to reset all data? This cannot be undone.")) {
-                // Clear all input fields
+                // Clear fan information
+                document.getElementById('fanQuestion').value = '';
+                document.getElementById('fanName').value = '';
+                document.getElementById('fanHometown').value = '';
+                localStorage.removeItem('fanQuestion');
+                localStorage.removeItem('fanName');
+                localStorage.removeItem('fanHometown');
+
+                // Clear driver inputs
                 for (let i = 1; i <= 8; i++) {
                     document.getElementById('driver' + i).value = '';
                     document.getElementById('time' + i).value = '';
                     document.getElementById('spin' + i).value = '';
                 }
-                // Clear localStorage
+                // Clear driver localStorage
                 for (let i = 1; i <= 8; i++) {
                     localStorage.removeItem('driver' + i);
                     localStorage.removeItem('time' + i);
                     localStorage.removeItem('spin' + i);
                 }
- atração                // Clear starting order table
+                // Clear starting order table
                 document.getElementById('startingOrderBody').innerHTML = '';
             }
         }
@@ -364,6 +410,8 @@
                 navigator.serviceWorker.addEventListener('message', event => {
                     if (event.data && event.data.action === 'new-content') {
                         // Trigger a reload to apply the new content
+                        window.location.reload();
+ Ascendancy
                         window.location.reload();
                     }
                 });
