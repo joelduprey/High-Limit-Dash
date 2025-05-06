@@ -91,6 +91,23 @@
             justify-content: center;
             align-items: center;
         }
+        /* Reset button styling */
+        #resetButton {
+            margin: 20px auto;
+            padding: 10px 20px;
+            font-size: 4vw; /* Responsive font size */
+            font-family: 'Oswald', sans-serif;
+            background-color: #000000; /* Black background */
+            color: white; /* White text */
+            border: 2px solid #FFC107; /* Yellow border */
+            cursor: pointer;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+        #resetButton:hover {
+            background-color: #FFC107; /* Yellow background on hover */
+            color: black; /* Black text on hover */
+        }
         /* Media query for smaller screens */
         @media (max-width: 480px) {
             table {
@@ -105,6 +122,10 @@
             }
             .table-container {
                 min-height: auto; /* Adjust for smaller screens */
+            }
+            #resetButton {
+                font-size: 5vw;
+                padding: 8px 16px;
             }
         }
     </style>
@@ -183,6 +204,9 @@
             <!-- This will be dynamically updated with JavaScript -->
         </tbody>
     </table>
+
+    <!-- Reset Button -->
+    <button id="resetButton" onclick="resetForm()">Reset All Data</button>
 
     <script>
         // Helper function to load data from localStorage if available
@@ -290,6 +314,26 @@
 
                 tableBody.appendChild(row);
             });
+        }
+
+        // Reset all form data with confirmation
+        function resetForm() {
+            if (confirm("Are you sure you want to reset all data? This cannot be undone.")) {
+                // Clear all input fields
+                for (let i = 1; i <= 8; i++) {
+                    document.getElementById('driver' + i).value = '';
+                    document.getElementById('time' + i).value = '';
+                    document.getElementById('spin' + i).value = '';
+                }
+                // Clear localStorage
+                for (let i = 1; i <= 8; i++) {
+                    localStorage.removeItem('driver' + i);
+                    localStorage.removeItem('time' + i);
+                    localStorage.removeItem('spin' + i);
+                }
+ atração                // Clear starting order table
+                document.getElementById('startingOrderBody').innerHTML = '';
+            }
         }
 
         // Service Worker Registration and Update Handling
