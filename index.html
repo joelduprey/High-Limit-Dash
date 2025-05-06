@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
     <meta name="description" content="High Limit Dash Starting Order and Fan Question Tracker">
-    <meta name="theme-color" content="#1a1a1a"> <!-- Matches body background -->
+    <meta name="theme-color" content="#1a1a1a">
     <meta name="apple-mobile-web-app-capable" content="yes">
     <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
     <meta name="apple-mobile-web-app-title" content="High Limit Dash">
@@ -13,114 +13,107 @@
     <link rel="manifest" href="/High-Limit-Dash/manifest.json">
     <title>High Limit Dash Starting Order</title>
     <style>
-        @import url('https://fonts.googleapis.com/css2?family=Oswald:wght@600&display=swap'); /* Racing-style font */
-        
-        
+        @import url('https://fonts.googleapis.com/css2?family=Oswald:wght@600&display=swap');
         body {
             font-family: 'Oswald', sans-serif;
             text-align: center;
             margin: 10px;
-            background-color: #1a1a1a; /* Darker black background */
+            background-color: #1a1a1a;
             color: white;
-            font-size: 16px; /* Base font size for mobile */
-            
+            font-size: 16px;
         }
         table {
             width: 100%;
-            max-width: 100%; /* Ensure table fits within screen width */
+            max-width: 100%;
             margin: 5px auto;
             border-collapse: collapse;
-            background-color: #000000; /* Black background for table */
+            background-color: #000000;
             color: white;
-            border: 2px solid #FFC107; /* Yellow borders */
-            font-size: 3.5vw; /* Responsive font size for table */
+            border: 2px solid #FFC107;
+            font-size: 3.5vw;
         }
         th, td {
-            border: 2px solid #FFC107; /* Yellow borders */
+            border: 2px solid #FFC107;
             padding: 8px;
             text-align: center;
-            text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.8); /* Add shadow for readability */
-            background-color: #000000; /* Black background for table cells */
-            color: white; /* White text */
+            text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.8);
+            background-color: #000000;
+            color: white;
         }
-        /* Widen the Driver column */
         th:nth-child(1), td:nth-child(1) {
-            width: 50%; /* Make Driver column wider */
+            width: 50%;
         }
         th:nth-child(2), td:nth-child(2) {
-            width: 30%; /* Qualifying Time column */
+            width: 30%;
         }
         th:nth-child(3), td:nth-child(3) {
-            width: 20%; /* Spin Number column */
+            width: 20%;
         }
         input, textarea {
-            width: 90%; /* Slightly less than full width for padding */
+            width: 90%;
             padding: 8px;
-            font-size: 3.5vw; /* Responsive font size for inputs */
+            font-size: 3.5vw;
             text-align: center;
-            background-color: #000000; /* Black background for inputs */
-            color: white; /* White text */
-            border: 1px solid #FFC107; /* Yellow border */
-            box-sizing: border-box; /* Ensure padding doesn’t affect width */
+            background-color: #000000;
+            color: white;
+            border: 1px solid #FFC107;
+            box-sizing: border-box;
             font-family: 'Oswald', sans-serif;
         }
         textarea {
-            resize: none; /* Prevent resizing */
+            resize: none;
         }
         .highlight {
-            background-color: #FFC107; /* Yellow highlight */
+            background-color: #FFC107;
             color: black;
             font-weight: bold;
         }
         .header {
-            font-size: 6vw; /* Responsive font size for headers */
+            font-size: 6vw;
             font-weight: bold;
-            color: #FFC107; /* Yellow headers */
+            color: #FFC107;
             text-transform: uppercase;
             margin: 5px 0;
             letter-spacing: 1px;
         }
         #startingOrder tr td {
-            background-color: #1E88E5; /* Blue background for starting order table */
+            background-color: #1E88E5;
             color: white;
-            font-size: 3.5vw; /* Responsive font size */
+            font-size: 3.5vw;
         }
         #startingOrder tr td:first-child {
-            background-color: #FFC107; /* Yellow for row numbers */
-            color: black; /* Black text for contrast */
+            background-color: #FFC107;
+            color: black;
             font-weight: bold;
         }
         #startingOrder th {
-            background-color: #1E88E5; /* Blue header background */
-            color: #FFC107; /* Yellow header text */
+            background-color: #1E88E5;
+            color: #FFC107;
         }
-        /* Container for the top table, background image removed */
         .table-container {
             position: relative;
             padding: 5px;
-            min-height: auto; /* No need for extra height without the background image */
+            min-height: auto;
             display: flex;
             justify-content: center;
             align-items: center;
         }
-        /* Reset button styling */
         .reset-button {
             margin: 10px auto;
             padding: 10px 20px;
-            font-size: 4vw; /* Responsive font size */
+            font-size: 4vw;
             font-family: 'Oswald', sans-serif;
-            background-color: #FFC107; /* Yellow background */
-            color: black; /* Black text */
-            border: 2px solid #FFC107; /* Yellow border */
+            background-color: #FFC107;
+            color: black;
+            border: 2px solid #FFC107;
             cursor: pointer;
             text-transform: uppercase;
             letter-spacing: 1px;
         }
         .reset-button:hover {
-            background-color: #1E88E5; /* Blue on hover */
+            background-color: #1E88E5;
             color: white;
         }
-        /* Container for fan info inputs */
         .fan-info-container {
             margin: 10px auto;
             max-width: 600px;
@@ -136,10 +129,10 @@
         }
         .fan-info-input, .fan-info-textarea {
             width: 100%;
-            max-width: 600px; /* Larger width */
+            max-width: 600px;
             padding: 8px;
-            font-size: 4vw; /* Responsive font size */
-            line-height: 1.2em; /* Consistent line height */
+            font-size: 4vw;
+            line-height: 1.2em;
             text-align: center;
             background-color: #000000;
             color: white;
@@ -148,13 +141,12 @@
             box-sizing: border-box;
         }
         .fan-info-textarea {
-            min-height: 5em; /* Larger height */
+            min-height: 5em;
             resize: none;
         }
-        /* Media query for smaller screens */
         @media (max-width: 480px) {
             table {
-                font-size: 4vw; /* Slightly larger font for very small screens */
+                font-size: 4vw;
             }
             input, textarea {
                 font-size: 4vw;
@@ -164,7 +156,7 @@
                 font-size: 7vw;
             }
             .table-container {
-                min-height: auto; /* Adjust for smaller screens */
+                min-height: auto;
             }
             .reset-button {
                 font-size: 5vw;
@@ -175,8 +167,8 @@
             }
             .fan-info-textarea {
                 line-height: 1.2em;
-                min-height: 5em; /* Maintain taller box */
-                max-width: 100%; /* Full width on small screens */
+                min-height: 5em;
+                max-width: 100%;
             }
             .fan-info-label {
                 font-size: 5vw;
@@ -185,9 +177,184 @@
     </style>
 </head>
 <body onload="loadFormData()">
-    
-
-    <!-- Fan Info Inputs -->
+    <div class="fan-info-container">
+        <div>
+            <label for="fanQuestion" class="fan-info-label">High Limit Racing Hot Seat Question</label>
+            <textarea id="fanQuestion" class="fan-info-textarea" placeholder="Enter Fan's Question" rows="3" oninput="saveFormData(); adjustTextareaHeight(this)"></textarea>
+        </div>
+        <div>
+            <input type="text" id="fanName" class="fan-info-input" placeholder="Enter Fan’s Name" oninput="saveFormData()">
+        </div>
+        <div>
+            <input type="text" id="fanHometown" right="High-Limit-Dash/apple-touch-icon.png">
+    <link rel="icon" href="/High-Limit-Dash/icon.png">
+    <link rel="manifest" href="/High-Limit-Dash/manifest.json">
+    <title>High Limit Dash Starting Order</title>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Oswald:wght@600&display=swap');
+        body {
+            font-family: 'Oswald', sans-serif;
+            text-align: center;
+            margin: 10px;
+            background-color: #1a1a1a;
+            color: white;
+            font-size: 16px;
+        }
+        table {
+            width: 100%;
+            max-width: 100%;
+            margin: 5px auto;
+            border-collapse: collapse;
+            background-color: #000000;
+            color: white;
+            border: 2px solid #FFC107;
+            font-size: 3.5vw;
+        }
+        th, td {
+            border: 2px solid #FFC107;
+            padding: 8px;
+            text-align: center;
+            text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.8);
+            background-color: #000000;
+            color: white;
+        }
+        th:nth-child(1), td:nth-child(1) {
+            width: 50%;
+        }
+        th:nth-child(2), td:nth-child(2) {
+            width: 30%;
+        }
+        th:nth-child(3), td:nth-child(3) {
+            width: 20%;
+        }
+        input, textarea {
+            width: 90%;
+            padding: 8px;
+            font-size: 3.5vw;
+            text-align: center;
+            background-color: #000000;
+            color: white;
+            border: 1px solid #FFC107;
+            box-sizing: border-box;
+            font-family: 'Oswald', sans-serif;
+        }
+        textarea {
+            resize: none;
+        }
+        .highlight {
+            background-color: #FFC107;
+            color: black;
+            font-weight: bold;
+        }
+        .header {
+            font-size: 6vw;
+            font-weight: bold;
+            color: #FFC107;
+            text-transform: uppercase;
+            margin: 5px 0;
+            letter-spacing: 1px;
+        }
+        #startingOrder tr td {
+            background-color: #1E88E5;
+            color: white;
+            font-size: 3.5vw;
+        }
+        #startingOrder tr td:first-child {
+            background-color: #FFC107;
+            color: black;
+            font-weight: bold;
+        }
+        #startingOrder th {
+            background-color: #1E88E5;
+            color: #FFC107;
+        }
+        .table-container {
+            position: relative;
+            padding: 5px;
+            min-height: auto;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+        .reset-button {
+            margin: 10px auto;
+            padding: 10px 20px;
+            font-size: 4vw;
+            font-family: 'Oswald', sans-serif;
+            background-color: #FFC107;
+            color: black;
+            border: 2px solid #FFC107;
+            cursor: pointer;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+        .reset-button:hover {
+            background-color: #1E88E5;
+            color: white;
+        }
+        .fan-info-container {
+            margin: 10px auto;
+            max-width: 600px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 10px;
+        }
+        .fan-info-label {
+            font-size: 4vw;
+            color: #FFC107;
+            text-transform: uppercase;
+        }
+        .fan-info-input, .fan-info-textarea {
+            width: 100%;
+            max-width: 600px;
+            padding: 8px;
+            font-size: 4vw;
+            line-height: 1.2em;
+            text-align: center;
+            background-color: #000000;
+            color: white;
+            border: 1px solid #FFC107;
+            font-family: 'Oswald', sans-serif;
+            box-sizing: border-box;
+        }
+        .fan-info-textarea {
+            min-height: 5em;
+            resize: none;
+        }
+        @media (max-width: 480px) {
+            table {
+                font-size: 4vw;
+            }
+            input, textarea {
+                font-size: 4vw;
+                padding: 6px;
+            }
+            .header {
+                font-size: 7vw;
+            }
+            .table-container {
+                min-height: auto;
+            }
+            .reset-button {
+                font-size: 5vw;
+                padding: 8px 16px;
+            }
+            .fan-info-input, .fan-info-textarea {
+                font-size: 5vw;
+            }
+            .fan-info-textarea {
+                line-height: 1.2em;
+                min-height: 5em;
+                max-width: 100%;
+            }
+            .fan-info-label {
+                font-size: 5vw;
+            }
+        }
+    </style>
+</head>
+<body onload="loadFormData()">
     <div class="fan-info-container">
         <div>
             <label for="fanQuestion" class="fan-info-label">High Limit Racing Hot Seat Question</label>
@@ -201,10 +368,8 @@
         </div>
     </div>
 
-    <!-- Redraw Wheel Order Header -->
     <div class="header">REDRAW WHEEL ORDER</div>
 
-    <!-- Wrap the top table in a container, no background image -->
     <div class="table-container">
         <table>
             <thead>
@@ -218,42 +383,42 @@
                 <tr>
                     <td><input type="text" placeholder="Driver 1" id="driver1" oninput="saveFormData(); updateGrid()"></td>
                     <td><input type="text" placeholder="00.000" id="time1" oninput="formatTime(this); saveFormData(); updateGrid()"></td>
-                    <td><input type="text" min="00" max="36" id="spin1" oninput="restrictSpin(this); saveFormData(); updateGrid()"></td>
+                    <td><input type="text" placeholder="0, 00-36" id="spin1" oninput="restrictSpin(this); saveFormData(); updateGrid()"></td>
                 </tr>
                 <tr>
                     <td><input type="text" placeholder="Driver 2" id="driver2" oninput="saveFormData(); updateGrid()"></td>
                     <td><input type="text" placeholder="00.000" id="time2" oninput="formatTime(this); saveFormData(); updateGrid()"></td>
-                    <td><input type="text" min="00" max="36" id="spin2" oninput="restrictSpin(this); saveFormData(); updateGrid()"></td>
+                    <td><input type="text" placeholder="0, 00-36" id="spin2" oninput="restrictSpin(this); saveFormData(); updateGrid()"></td>
                 </tr>
                 <tr>
                     <td><input type="text" placeholder="Driver 3" id="driver3" oninput="saveFormData(); updateGrid()"></td>
                     <td><input type="text" placeholder="00.000" id="time3" oninput="formatTime(this); saveFormData(); updateGrid()"></td>
-                    <td><input type="text" min="00" max="36" id="spin3" oninput="restrictSpin(this); saveFormData(); updateGrid()"></td>
+                    <td><input type="text" placeholder="0, 00-36" id="spin3" oninput="restrictSpin(this); saveFormData(); updateGrid()"></td>
                 </tr>
                 <tr>
                     <td><input type="text" placeholder="Driver 4" id="driver4" oninput="saveFormData(); updateGrid()"></td>
                     <td><input type="text" placeholder="00.000" id="time4" oninput="formatTime(this); saveFormData(); updateGrid()"></td>
-                    <td><input type="text" min="00" max="36" id="spin4" oninput="restrictSpin(this); saveFormData(); updateGrid()"></td>
+                    <td><input type="text" placeholder="0, 00-36" id="spin4" oninput="restrictSpin(this); saveFormData(); updateGrid()"></td>
                 </tr>
                 <tr>
                     <td><input type="text" placeholder="Driver 5" id="driver5" oninput="saveFormData(); updateGrid()"></td>
                     <td><input type="text" placeholder="00.000" id="time5" oninput="formatTime(this); saveFormData(); updateGrid()"></td>
-                    <td><input type="text" min="00" max="36" id="spin5" oninput="restrictSpin(this); saveFormData(); updateGrid()"></td>
+                    <td><input type="text" placeholder="0, 00-36" id="spin5" oninput="restrictSpin(this); saveFormData(); updateGrid()"></td>
                 </tr>
                 <tr>
                     <td><input type="text" placeholder="Driver 6" id="driver6" oninput="saveFormData(); updateGrid()"></td>
                     <td><input type="text" placeholder="00.000" id="time6" oninput="formatTime(this); saveFormData(); updateGrid()"></td>
-                    <td><input type="text" min="00" max="36" id="spin6" oninput="restrictSpin(this); saveFormData(); updateGrid()"></td>
+                    <td><input type="text" placeholder="0, 00-36" id="spin6" oninput="restrictSpin(this); saveFormData(); updateGrid()"></td>
                 </tr>
                 <tr>
                     <td><input type="text" placeholder="Driver 7" id="driver7" oninput="saveFormData(); updateGrid()"></td>
                     <td><input type="text" placeholder="00.000" id="time7" oninput="formatTime(this); saveFormData(); updateGrid()"></td>
-                    <td><input type="text" min="00" max="36" id="spin7" oninput="restrictSpin(this); saveFormData(); updateGrid()"></td>
+                    <td><input type="text" placeholder="0, 00-36" id="spin7" oninput="restrictSpin(this); saveFormData(); updateGrid()"></td>
                 </tr>
                 <tr>
                     <td><input type="text" placeholder="Driver 8" id="driver8" oninput="saveFormData(); updateGrid()"></td>
                     <td><input type="text" placeholder="00.000" id="time8" oninput="formatTime(this); saveFormData(); updateGrid()"></td>
-                    <td><input type="text" min="00" max="36" id="spin8" oninput="restrictSpin(this); saveFormData(); updateGrid()"></td>
+                    <td><input type="text" placeholder="0, 00-36" id="spin8" oninput="restrictSpin(this); saveFormData(); updateGrid()"></td>
                 </tr>
             </tbody>
         </table>
@@ -270,19 +435,14 @@
             </tr>
         </thead>
         <tbody id="startingOrderBody">
-            <!-- This will be dynamically updated with JavaScript -->
         </tbody>
     </table>
 
-    <!-- Reset Button -->
     <button class="reset-button" onclick="resetForm()">Reset All</button>
 
     <script>
-        // Debug PWA installability
         window.addEventListener('load', () => {
-            // Check if served over HTTPS
             console.log('Is HTTPS:', window.location.protocol === 'https:');
-            // Check manifest
             fetch('/High-Limit-Dash/manifest.json')
                 .then(response => {
                     console.log('Manifest fetch:', response.ok ? 'Success' : 'Failed', response.status);
@@ -290,17 +450,15 @@
                 })
                 .then(data => console.log('Manifest content:', data))
                 .catch(error => console.error('Manifest error:', error));
-            // Check if install prompt is available
             window.addEventListener('beforeinstallprompt', (e) => {
                 console.log('Install prompt available');
-                e.preventDefault(); // Prevent default prompt for debugging
+                e.preventDefault();
             });
             window.addEventListener('appinstalled', () => {
                 console.log('PWA was installed');
             });
         });
 
-        // Register service worker with enhanced error handling
         if ('serviceWorker' in navigator) {
             window.addEventListener('load', () => {
                 navigator.serviceWorker.register('/High-Limit-Dash/service-worker.js')
@@ -323,9 +481,7 @@
             console.log('Service Worker not supported in this browser');
         }
 
-        // Helper function to load data from localStorage if available
         function loadFormData() {
-            // Load fan info
             let fanQuestion = localStorage.getItem('fanQuestion');
             let fanName = localStorage.getItem('fanName');
             let fanHometown = localStorage.getItem('fanHometown');
@@ -333,43 +489,37 @@
             if (fanName) document.getElementById('fanName').value = fanName;
             if (fanHometown) document.getElementById('fanHometown').value = fanHometown;
 
-            // Adjust textarea height after loading fan question
             adjustTextareaHeight(document.getElementById('fanQuestion'));
 
-            // Load driver data
             for (let i = 1; i <= 8; i++) {
                 let driver = localStorage.getItem('driver' + i);
-                let time = localStorage.getItem('time' + i);
+                let Dokumentation time = localStorage.getItem('time' + i);
                 let spin = localStorage.getItem('spin' + i);
                 if (driver) document.getElementById('driver' + i).value = driver;
                 if (time) document.getElementById('time' + i).value = time;
-                if (spin) document.getElementById('spin' + i).value = spin;
+                if (spin || spin === '0') document.getElementById('spin' + i).value = spin === '00' ? '0' : spin;
             }
             updateGrid();
         }
 
-        // Save form data to localStorage
         function saveFormData() {
-            // Save fan info
             localStorage.setItem('fanQuestion', document.getElementById('fanQuestion').value);
             localStorage.setItem('fanName', document.getElementById('fanName').value);
             localStorage.setItem('fanHometown', document.getElementById('fanHometown').value);
 
-            // Save driver data
             for (let i = 1; i <= 8; i++) {
+                let spinValue = document.getElementById('spin' + i).value;
                 localStorage.setItem('driver' + i, document.getElementById('driver' + i).value);
                 localStorage.setItem('time' + i, document.getElementById('time' + i).value);
-                localStorage.setItem('spin' + i, document.getElementById('spin' + i).value);
+                localStorage.setItem('spin' + i, spinValue === '00' ? '0' : spinValue);
             }
         }
 
-        // Adjust textarea height based on content
         function adjustTextareaHeight(textarea) {
-            textarea.style.height = 'auto'; // Reset height to measure scrollHeight
-            textarea.style.height = `${Math.max(textarea.scrollHeight, 5 * parseFloat(getComputedStyle(textarea).fontSize) * 1.2)}px`; // Set to scrollHeight or min 5 lines
+            textarea.style.height = 'auto';
+            textarea.style.height = `${Math.max(textarea.scrollHeight, 5 * parseFloat(getComputedStyle(textarea).fontSize) * 1.2)}px`;
         }
 
-        // Format time as mm.ss.sss
         function formatTime(input) {
             let value = input.value.replace(/[^0-9.]/g, '');
             if (value.indexOf('.') === -1) {
@@ -378,23 +528,32 @@
             input.value = value;
         }
 
-        // Restrict spin input to be between 00 and 36 and format as two digits
         function restrictSpin(input) {
-            let value = parseInt(input.value);
-            if (value < 0) value = 0;
-            if (value > 36) value = 36;
-            input.value = value < 10 ? '0' + value : value.toString();
+            let value = input.value.trim();
+            if (value === '') return; // Allow blank input
+            if (value === '0' || value === '00') {
+                input.value = '0'; // Normalize 0 and 00 to 0
+                return;
+            }
+            let num = parseInt(value);
+            if (isNaN(num) || num < 1 || num > 36) {
+                input.value = ''; // Clear invalid input
+            } else {
+                input.value = num.toString(); // Keep valid numbers 1-36
+            }
         }
 
-        // Update the starting order table based on inputs
         function updateGrid() {
             let drivers = [];
             for (let i = 1; i <= 8; i++) {
                 let driver = document.getElementById('driver' + i).value;
                 let time = document.getElementById('time' + i).value;
-                let spin = parseInt(document.getElementById('spin' + i).value);
-                if (driver && time && !isNaN(spin)) {
-                    drivers.push({ driver, time, spin });
+                let spin = document.getElementById('spin' + i).value.trim();
+                if (driver && time && spin !== '') {
+                    let spinNum = (spin === '0' || spin === '00') ? 0 : parseInt(spin);
+                    if (!isNaN(spinNum) && spinNum >= 0 && spinNum <= 36) {
+                        drivers.push({ driver, time, spin: spinNum });
+                    }
                 }
             }
 
@@ -423,18 +582,16 @@
                 row.appendChild(timeCell);
 
                 let spinCell = document.createElement('td');
-                spinCell.textContent = driver.spin.toString().padStart(2, '0'); // Ensure two digits for spin
+                spinCell.textContent = driver.spin === 0 ? '0' : driver.spin.toString();
                 row.appendChild(spinCell);
 
                 tableBody.appendChild(row);
             });
         }
 
-        // Reset all inputs and localStorage with confirmation
         function resetForm() {
-            console.log('resetForm called'); // Debug log
+            console.log('resetForm called');
             if (confirm('Are you sure you want to reset all data? This cannot be undone.')) {
-                // Clear fan info
                 document.getElementById('fanQuestion').value = '';
                 document.getElementById('fanName').value = '';
                 document.getElementById('fanHometown').value = '';
@@ -442,7 +599,6 @@
                 localStorage.removeItem('fanName');
                 localStorage.removeItem('fanHometown');
 
-                // Clear driver data
                 for (let i = 1; i <= 8; i++) {
                     document.getElementById('driver' + i).value = '';
                     document.getElementById('time' + i).value = '';
