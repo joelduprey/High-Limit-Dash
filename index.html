@@ -85,7 +85,7 @@
         }
         /* Custom font size for Hot Seat Fan Question header */
         .fan-header {
-            font-size: 6vw; /* Match other headers for consistency */
+            font-size: 3vw; /* Match other headers for consistency */
         }
         #startingOrder tr td {
             background-color: #1E88E5; /* Blue background for starting order table cells */
@@ -167,9 +167,9 @@
 
     <!-- Fan Input Fields -->
     <div class="fan-container">
-        <textarea id="fanQuestion" rows="3" placeholder="Fan Question of the Night" oninput="saveFormData()"></textarea>
-        <input type="text" id="fanName" placeholder="Fans Name" oninput="saveFormData()">
-        <input type="text" id="fanHometown" placeholder="Fans Hometown" oninput="saveFormData()">
+        <textarea id="fanQuestion" rows="3" placeholder="Hot Seat Question of the Night" oninput="saveFormData()"></textarea>
+        <input type="text" id="fanName" placeholder="Fan's Name" oninput="saveFormData()">
+        <input type="text" id="fanHometown" placeholder="Fan's Hometown" oninput="saveFormData()">
     </div>
 
     <!-- Redraw Wheel Order Header -->
@@ -230,7 +230,7 @@
         </table>
     </div>
 
-    <div class="header">Starting Grid</div>
+    <div class="header">Starting Lineup</div>
     <table id="startingOrder">
         <thead>
             <tr>
