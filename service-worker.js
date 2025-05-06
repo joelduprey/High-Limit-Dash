@@ -2,7 +2,7 @@ const CACHE_NAME = 'high-limit-dash-cache-v55';
 const urlsToCache = [
   'index.html',
   'icon.png',
-  'manifest.json'
+  'manifest.json',
   'https://fonts.googleapis.com/css2?family=Oswald:wght@600&display=swap'
 ];
 
