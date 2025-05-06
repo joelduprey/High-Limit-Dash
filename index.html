@@ -3,7 +3,9 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <meta name="theme-color" content="#1a1a1a">
     <title>High Limit Dash Starting Order</title>
+    <link rel="manifest" href="manifest.json">
     <style>
         @import url('https://fonts.googleapis.com/css2?family=Oswald:wght@600&display=swap'); /* Racing-style font */
         
@@ -123,7 +125,6 @@
                 </tr>
             </thead>
             <tbody id="drivers">
-                <!-- Added 2 extra rows for drivers -->
                 <tr>
                     <td><input type="text" placeholder="Driver 1" id="driver1" oninput="saveFormData(); updateGrid()"></td>
                     <td><input type="text" placeholder="00.000" id="time1" oninput="formatTime(this); saveFormData(); updateGrid()"></td>
@@ -207,21 +208,37 @@
             }
         }
 
-        // Format time as mm.ss.sss
+        // Format time as ss.sss
         function formatTime(input) {
             let value = input.value.replace(/[^0-9.]/g, '');
-            if (value.indexOf('.') === -1) {
-                if (value.length > 2) value = value.slice(0, 2) + '.' + value.slice(2);
+            if (value.indexOf('.') === -1 && value.length > 2) {
+                value = value.slice(0, 2) + '.' + value.slice(2);
+            }
+            // Ensure the format is ss.sss
+            let parts = value.split('.');
+            if (parts.length > 1) {
+                parts[0] = parts[0].slice(0, 2); // Seconds: max 2 digits
+                parts[1] = parts[1].slice(0, 3); // Milliseconds: max 3 digits
+                value = parts.join('.');
             }
             input.value = value;
         }
 
-        // Restrict spin input to be between 00 and 36 and format as two digits
+        // Restrict spin input to be '00', '0', or 1-36
         function restrictSpin(input) {
-            let value = parseInt(input.value);
-            if (value < 0) value = 0;
-            if (value > 36) value = 36;
-            input.value = value < 10 ? '0' + value : value.toString();
+            let value = input.value.replace(/[^0-9]/g, '');
+            if (value === '00') {
+                input.value = '00';
+                return;
+            }
+            if (value === '0' || value === '') {
+                input.value = '0';
+                return;
+            }
+            let num = parseInt(value);
+            if (isNaN(num) || num < 0) num = 0;
+            if (num > 36) num = 36;
+            input.value = num.toString();
         }
 
         // Update the starting order table based on inputs
@@ -230,18 +247,24 @@
             for (let i = 1; i <= 8; i++) {
                 let driver = document.getElementById('driver' + i).value;
                 let time = document.getElementById('time' + i).value;
-                let spin = parseInt(document.getElementById('spin' + i).value);
+                let spin = document.getElementById('spin' + i).value;
 
-                if (driver && time && !isNaN(spin)) {
-                    drivers.push({ driver, time, spin });
+                if (driver && time && spin !== '') {
+                    // Assign sortValue for proper ordering: '00' < '0' < 1 < ... < 36
+                    let sortValue;
+                    if (spin === '00') sortValue = -2;
+                    else if (spin === '0') sortValue = -1;
+                    else sortValue = parseInt(spin);
+                    drivers.push({ driver, time, spin, sortValue });
                 }
             }
 
+            // Sort drivers: '00' < '0' < 1 < ... < 36, with time as tiebreaker
             drivers.sort((a, b) => {
-                if (a.spin === b.spin) {
+                if (a.sortValue === b.sortValue) {
                     return parseFloat(a.time) - parseFloat(b.time);
                 }
-                return a.spin - b.spin;
+                return a.sortValue - b.sortValue;
             });
 
             let tableBody = document.getElementById('startingOrderBody');
@@ -262,10 +285,44 @@
                 row.appendChild(timeCell);
 
                 let spinCell = document.createElement('td');
-                spinCell.textContent = driver.spin.toString().padStart(2, '0'); // Ensure two digits for spin
+                spinCell.textContent = driver.spin;
                 row.appendChild(spinCell);
 
                 tableBody.appendChild(row);
+            });
+        }
+
+        // Service Worker Registration and Update Handling
+        if ('serviceWorker' in navigator) {
+            window.addEventListener('load', () => {
+                navigator.serviceWorker.register('/sw.js').then(registration => {
+                    console.log('Service Worker registered with scope:', registration.scope);
+
+                    // Listen for updates
+                    registration.addEventListener('updatefound', () => {
+                        const newWorker = registration.installing;
+                        newWorker.addEventListener('statechange', () => {
+                            if (newWorker.state === 'installed' && navigator.serviceWorker.controller) {
+                                // New content is available
+                                console.log('New content is available; please refresh.');
+                                // Notify the user or auto-refresh
+                                window.addEventListener('beforeunload', () => {
+                                    newWorker.postMessage({ action: 'skipWaiting' });
+                                });
+                            }
+                        });
+                    });
+                }).catch(error => {
+                    console.error('Service Worker registration failed:', error);
+                });
+
+                // Listen for messages from the service worker
+                navigator.serviceWorker.addEventListener('message', event => {
+                    if (event.data && event.data.action === 'new-content') {
+                        // Trigger a reload to apply the new content
+                        window.location.reload();
+                    }
+                });
             });
         }
     </script>
