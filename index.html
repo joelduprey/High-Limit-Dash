@@ -163,11 +163,8 @@
     }
         }
     
-        .banner-container {
-            position: relative;
+        .banner-wrapper {
             width: 100%;
-            height: auto;
-            margin-bottom: 10px;
         }
 
         .banner-image {
@@ -176,24 +173,29 @@
             display: block;
         }
 
-        .logo-overlay {
-            position: absolute;
-            top: 50%;
-            left: 50%;
-            transform: translate(-50%, -50%);
-            max-width: 60%;
+        .logo-wrapper {
+            width: 100%;
+            text-align: center;
+            margin: 10px 0;
+        }
+
+        .logo-image {
+            width: 25%;
             height: auto;
-            pointer-events: none;
         }
 
 </style>
 </head>
 <body onload="loadFormData()">
 
-<div class="banner-container">
+
+<div class="banner-wrapper">
     <img src="header.png" alt="Header Banner" class="banner-image">
-    <img src="HighLimit_Kubota_Logo.png" alt="High Limit Logo" class="logo-overlay">
 </div>
+<div class="logo-wrapper">
+    <img src="HighLimit_Kubota_Logo.png" alt="High Limit Logo" class="logo-image">
+</div>
+
 
 
     <!-- Fan Information Header -->
