@@ -162,9 +162,39 @@
         border: 2px solid black;
     }
         }
-    </style>
+    
+        .banner-container {
+            position: relative;
+            width: 100%;
+            height: auto;
+            margin-bottom: 10px;
+        }
+
+        .banner-image {
+            width: 100%;
+            height: auto;
+            display: block;
+        }
+
+        .logo-overlay {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            max-width: 60%;
+            height: auto;
+            pointer-events: none;
+        }
+
+</style>
 </head>
 <body onload="loadFormData()">
+
+<div class="banner-container">
+    <img src="header.png" alt="Header Banner" class="banner-image">
+    <img src="HighLimit_Kubota_Logo.png" alt="High Limit Logo" class="logo-overlay">
+</div>
+
 
     <!-- Fan Information Header -->
     <div class="header fan-header">Fan Question of the Night</div>
