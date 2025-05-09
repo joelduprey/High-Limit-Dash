@@ -1,16 +1,14 @@
-const CACHE_NAME = 'high-limit-dash-cache-v61';
+
+const CACHE_NAME = 'high-limit-dash-cache-v62';
 const urlsToCache = [
   'index.html',
   'icon.png',
   'manifest.json',
-  'https://fonts.googleapis.com/css2?family=Oswald:wght@600&display=swap'
+  'https://fonts.googleapis.com/css2?family=Oswald:wght@600&display=swap',
+  'header.png',
+  'HighLimit_Kubota_Logo.png'
 ];
-
-self.addEventListener('install', event => {
-    event.waitUntil(
-        caches.open(CACHE_NAME).then(cache => {
-            console.log('Opened cache');
-            return cache.addAll(urlsToCache);
+e);
         })
     );
 });
